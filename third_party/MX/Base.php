@@ -5,7 +5,7 @@ require_once 'Lang.php';
 require_once 'Config.php';
 
 /**
- * Modular Extensions - PHP5
+ * Modular Extensions - HMVC
  *
  * Adapted from the CodeIgniter Core Classes
  * @link	http://codeigniter.com
@@ -17,7 +17,7 @@ require_once 'Config.php';
  * Install this file as application/third_party/MX/Base.php
  *
  * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.0
+ * @version 	5.3.1
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,9 +71,6 @@ class CI extends CI_Base
 		/* re-assign language and config for modules */
 		if ( ! is_a($this->lang, 'MX_Lang')) $this->lang = new MX_Lang;
 		if ( ! is_a($this->config, 'MX_Config')) $this->config = new MX_Config;
-		
-		/* re-assign the loader for modules */
-		if ( ! is_a($this->load, 'MX_Loader')) $this->load = new MX_Loader;
 	}
 }
 

@@ -4,7 +4,7 @@
 require 'Modules.php';
 
 /**
- * Modular Extensions - PHP5
+ * Modular Extensions - HMVC
  *
  * Adapted from the CodeIgniter Core Classes
  * @link	http://codeigniter.com
@@ -15,7 +15,7 @@ require 'Modules.php';
  * Install this file as application/third_party/MX/Router.php
  *
  * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.0
+ * @version 	5.3.1
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
