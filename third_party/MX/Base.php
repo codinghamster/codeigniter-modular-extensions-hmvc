@@ -1,5 +1,9 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
+/* load MX core classes */
+require_once 'Lang.php';
+require_once 'Config.php';
+
 /**
  * Modular Extensions - PHP5
  *
