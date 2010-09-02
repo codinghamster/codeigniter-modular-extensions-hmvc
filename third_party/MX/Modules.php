@@ -20,8 +20,8 @@ spl_autoload_register('Modules::autoload');
  *
  * Install this file as application/third_party/MX/Modules.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.1
+ * @copyright	Copyright (c) Wiredesignz 2010-09-03
+ * @version 	5.3.2
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -155,7 +155,6 @@ class Modules
 		$segments = explode('/', $file);
 
 		$file = array_pop($segments);
-		if ($base == 'libraries/') $file = ucfirst($file);
 		$file_ext = strpos($file, '.') ? $file : $file.EXT;
 		
 		$lang && $lang .= '/';
@@ -166,16 +165,16 @@ class Modules
 			$modules[array_shift($segments)] = ltrim(implode('/', $segments).'/','/');
 		}	
 
-		foreach (Modules::$locations as $location => $offset) {
-					
+		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {
 				$fullpath = $location.$module.'/'.$base.$lang.$subpath;
+				if ($base == 'libraires/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, $file);
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
 		}
 		
 		/* is the file in an application directory? */
-		if ($base == 'views/' OR $base == 'models/') {
+		if ($base == 'views/' || $base == 'models/' || $base == 'plugins/') {
 			if (is_file(APPPATH.$base.$path.$file_ext)) return array(APPPATH.$base.$path, $file);
 			show_error("Unable to locate the file: {$path}{$file_ext}");
 		}

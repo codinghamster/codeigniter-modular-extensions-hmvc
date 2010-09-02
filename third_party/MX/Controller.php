@@ -15,8 +15,8 @@ require_once 'Base.php';
  *
  * Install this file as application/third_party/MX/Controller.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.1
+ * @copyright	Copyright (c) Wiredesignz 2010-09-03
+ * @version 	5.3.2
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,11 +48,9 @@ class MX_Controller
 		/* register this controller */
 		Modules::$registry[strtolower($class)] = $this;	
 		
-		/* assign the loader class */
-		$class = $this->config->item('subclass_prefix').'Loader';
-		$this->load = (class_exists($class, FALSE)) ? new $class : new MX_Loader;
-		
-		$this->load->_module();	
+		/* copy a loader instance and initialize */
+		$this->load = clone load_class('Loader');
+		$this->load->_init();	
 		
 		/* autoload module items */
 		$this->load->_autoloader($this->autoload);

@@ -12,8 +12,8 @@
  *
  * Install this file as application/third_party/MX/Config.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.1
+ * @copyright	Copyright (c) Wiredesignz 2010-09-03
+ * @version 	5.3.2
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

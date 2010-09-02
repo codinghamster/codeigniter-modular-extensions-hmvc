@@ -12,8 +12,8 @@
  *
  * Install this file as application/third_party/MX/Loader.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-08-31
- * @version 	5.3.1
+ * @copyright	Copyright (c) Wiredesignz 2010-09-03
+ * @version 	5.3.2
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,16 @@
 class MX_Loader extends CI_Loader
 {	
 	private $_module;
+	private $_ci_plugins;
 	
 	/** Return the module name **/
-	public function _module() {
-		return $this->_module = CI::$APP->router->fetch_module(); 		
+	public function _init() {
+		$this->_module = CI::$APP->router->fetch_module();
+		
+		/* references to ci loader class variables */
+		foreach (get_class_vars('CI_Loader') as $var => $val) {
+			$this->$var =& CI::$APP->load->$var;
+ 		}
 	}
 	
 	/** Load a module config file **/
@@ -107,7 +113,7 @@ class MX_Loader extends CI_Loader
 			list($path2, $file) = Modules::find($_alias, $this->_module, 'config/');	
 			($path2) AND $params = Modules::load_file($file, $path2, 'config');
 		}	
-		
+			
 		if ($path === FALSE) {		
 			parent::_ci_load_class($library, $params, $object_name);
 			$_alias = $this->_ci_classes[$class];
@@ -185,8 +191,7 @@ class MX_Loader extends CI_Loader
 
 		list($path, $_plugin) = Modules::find($plugin.'_pi', $this->_module, 'plugins/');	
 		
-		if ($path === FALSE) 
-			return parent::plugin($plugin);
+		if ($path === FALSE) return;
 
 		Modules::load_file($_plugin, $path);
 		$this->_ci_plugins[$plugin] = TRUE;
@@ -224,7 +229,7 @@ class MX_Loader extends CI_Loader
 		
 		if ($this->_module)
 			list($path, $file) = Modules::find('autoload', $this->_module, 'config/');
-	
+
 		/* module autoload file */
 		if ($path != FALSE)
 			$autoload = array_merge(Modules::load_file($file, $path, 'autoload'), $autoload);
