@@ -34,9 +34,10 @@
  * THE SOFTWARE.
  **/
 class MX_Loader extends CI_Loader
-{	
+{
 	private $_module;
-	private $_ci_plugins;
+	
+	public $_ci_plugins;
 	
 	/** Return the module name **/
 	public function _init() {
@@ -197,7 +198,7 @@ class MX_Loader extends CI_Loader
 		$this->_ci_plugins[$plugin] = TRUE;
 	}
 
-	/** Load an array of controllers **/
+	/** Load an array of plugins **/
 	public function plugins($plugins) {
 		foreach ($plugins as $_plugin) $this->plugin($_plugin);	
 	}
