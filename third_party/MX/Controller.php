@@ -1,7 +1,7 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /* load MX core classes */
-require_once 'Base.php';
+require 'Base.php';
 
 /**
  * Modular Extensions - HMVC
