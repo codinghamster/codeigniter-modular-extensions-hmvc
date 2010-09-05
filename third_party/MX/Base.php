@@ -45,7 +45,7 @@ class CI extends CI_Base
 		parent::__construct();
 		
 		/* assign the application instance */
-		self::$APP = $this;
+		self::$APP = CI_Base::get_instance();
 		
 		/* assign the core classes */
 		$classes = (CI_VERSION < 2) ? array(

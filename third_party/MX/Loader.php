@@ -1,5 +1,7 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
+(class_exists('CI', FALSE)) OR require 'CI.php';
+
 /**
  * Modular Extensions - HMVC
  *

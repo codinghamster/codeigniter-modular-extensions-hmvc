@@ -113,8 +113,7 @@ class Modules
 		/* don't autoload CI_ or MY_ prefixed classes */
 		if (strstr($class, 'CI_') OR strstr($class, 'MY_')) return;
 		
-		$class = ltrim($class, 'MX_');
-		if(is_file($location = APPPATH.'third_party/MX/'.$class.EXT)) {
+		if(is_file($location = APPPATH.'libraries/'.$class.EXT)) {
 			include_once $location;
 		}		
 	}
