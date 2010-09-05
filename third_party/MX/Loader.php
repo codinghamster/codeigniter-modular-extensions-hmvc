@@ -147,7 +147,7 @@ class MX_Loader extends CI_Loader
 			return CI::$APP->$_alias;
 		
 		list($path, $model) = Modules::find($model, $this->_module, 'models/');
-		load_class('Model', 'core');
+		(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
 
 		if ($connect !== FALSE) {
 			if ($connect === TRUE) $connect = '';
