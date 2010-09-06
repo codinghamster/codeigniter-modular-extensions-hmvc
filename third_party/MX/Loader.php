@@ -41,11 +41,21 @@ class MX_Loader extends CI_Loader
 	
 	public $_ci_plugins;
 	
-	/** Return the module name **/
+	public function __construct() {
+		
+		parent::__construct();
+		
+		/* set the module name for Modular Separation */
+		$this->_module = CI::$APP->router->fetch_module();
+	}
+	
+	/** Initialize the module **/
 	public function _init() {
+		
+		/* set the module name for Modular Extensions */
 		$this->_module = CI::$APP->router->fetch_module();
 		
-		/* references to ci loader class variables */
+		/* references to ci loader variables */
 		foreach (get_class_vars('CI_Loader') as $var => $val) {
 			$this->$var =& CI::$APP->load->$var;
  		}
