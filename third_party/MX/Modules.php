@@ -146,17 +146,16 @@ class Modules
 	/** 
 	* Find a file
 	* Scans for files located within modules directories.
-	* Also scans application directories for models and views.
+	* Also scans application directories for models, plugins and views.
 	* Generates fatal error if file not found.
 	**/
-	public static function find($file, $module, $base, $lang = '') {
+	public static function find($file, $module, $base) {
 	
 		$segments = explode('/', $file);
 
 		$file = array_pop($segments);
 		$file_ext = strpos($file, '.') ? $file : $file.EXT;
 		
-		$lang && $lang .= '/';
 		$path = ltrim(implode('/', $segments).'/', '/');	
 		$module ? $modules[$module] = $path : $modules = array();
 		
@@ -166,7 +165,7 @@ class Modules
 
 		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {
-				$fullpath = $location.$module.'/'.$base.$lang.$subpath;
+				$fullpath = $location.$module.'/'.$base.$subpath;
 				if ($base == 'libraires/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, $file);
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
