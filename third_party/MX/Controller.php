@@ -15,8 +15,8 @@ require 'Base.php';
  *
  * Install this file as application/third_party/MX/Controller.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-09-03
- * @version 	5.3.2
+ * @copyright	Copyright (c) Wiredesignz 2010-09-06
+ * @version 	5.3.3
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

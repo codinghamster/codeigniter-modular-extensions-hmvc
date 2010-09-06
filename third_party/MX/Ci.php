@@ -1,5 +1,9 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
+/* load MX core classes */
+require_once 'Lang.php';
+require_once 'Config.php';
+
 /**
  * Modular Extensions - HMVC
  *
@@ -7,10 +11,9 @@
  * @link	http://codeigniter.com
  *
  * Description:
- * This library extends the CodeIgniter CI_Config class
- * and adds features allowing use of modules and the HMVC design pattern.
+ * This library creates a CI class which allows of modules in an application.
  *
- * Install this file as application/third_party/MX/Config.php
+ * Install this file as application/third_party/MX/CI.php
  *
  * @copyright	Copyright (c) Wiredesignz 2010-09-06
  * @version 	5.3.3
@@ -33,39 +36,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
-class MX_Config extends CI_Config 
-{	
-	public function load($file = '', $use_sections = FALSE, $fail_gracefully = FALSE, $_module = NULL) {
-		($file == '') AND $file = 'config';
-
-		if (in_array($file, $this->is_loaded, TRUE))
-			return $this->item($file);
-
-		$_module || $_module = CI::$APP->router->fetch_module();
-		list($path, $file) = Modules::find($file, $_module, 'config/');
+class CI
+{
+	public static $APP;
+	
+	public function __construct() {
+		self::$APP = CI_Base::get_instance();
 		
-		if ($path === FALSE) {
-			parent::load($file, $use_sections, $fail_gracefully);					
-			return $this->item($file);
-		}  
+		/* assign the core loader */
+		self::$APP->load = new MX_Loader;
 		
-		if ($config = Modules::load_file($file, $path, 'config')) {
-			
-			/* reference to the config array */
-			$current_config =& $this->config;
-
-			if ($use_sections === TRUE)	{
-				if (isset($current_config[$file])) {
-					$current_config[$file] = array_merge($current_config[$file], $config);
-				} else {
-					$current_config[$file] = $config;
-				}
-			} else {
-				$current_config = array_merge($current_config, $config);
-			}
-			$this->is_loaded[] = $file;
-			unset($config);
-			return $this->item($file);
-		}
+		/* re-assign language and config for modules */
+		if ( ! is_a(self::$APP->lang, 'MX_Lang')) self::$APP->lang = new MX_Lang;
+		if ( ! is_a(self::$APP->config, 'MX_Config')) self::$APP->config = new MX_Config;
 	}
 }
+
+new CI;

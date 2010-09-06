@@ -1,6 +1,6 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-(class_exists('CI', FALSE)) OR require 'CI.php';
+(class_exists('CI', FALSE)) OR require 'Ci.php';
 
 /**
  * Modular Extensions - HMVC
@@ -14,8 +14,8 @@
  *
  * Install this file as application/third_party/MX/Loader.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-09-03
- * @version 	5.3.2
+ * @copyright	Copyright (c) Wiredesignz 2010-09-06
+ * @version 	5.3.3
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
