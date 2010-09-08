@@ -15,8 +15,8 @@ require 'Base.php';
  *
  * Install this file as application/third_party/MX/Controller.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-09-06
- * @version 	5.3.3
+ * @copyright	Copyright (c) Wiredesignz 2010-09-09
+ * @version 	5.3.4
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ class MX_Controller
 		log_message('debug', $class." MX_Controller Initialized");
 		
 		/* register this controller */
-		Modules::$registry[strtolower($class)] = $this;	
+		Modules::$registry[strtolower($class)] =& $this;	
 		
 		/* copy a loader instance and initialize */
 		$this->load = clone load_class('Loader');

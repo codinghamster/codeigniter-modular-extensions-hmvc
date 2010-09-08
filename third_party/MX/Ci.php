@@ -11,12 +11,12 @@ require_once 'Config.php';
  * @link	http://codeigniter.com
  *
  * Description:
- * This library creates a CI class which allows of modules in an application.
+ * This library creates a CI class which allows the use of modules in an application.
  *
- * Install this file as application/third_party/MX/CI.php
+ * Install this file as application/third_party/MX/Ci.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-09-06
- * @version 	5.3.3
+ * @copyright	Copyright (c) Wiredesignz 2010-09-09
+ * @version 	5.3.4
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

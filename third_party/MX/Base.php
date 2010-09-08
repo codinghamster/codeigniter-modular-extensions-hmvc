@@ -11,13 +11,13 @@ require_once 'Config.php';
  * @link	http://codeigniter.com
  *
  * Description:
- * This library extends the CodeIgniter CI_Base class
- * and creates an application object allowing use of the HMVC design pattern.
+ * This library extends the CodeIgniter CI_Base class and creates an application 
+ * object allowing use of the HMVC design pattern.
  *
  * Install this file as application/third_party/MX/Base.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-09-06
- * @version 	5.3.3
+ * @copyright	Copyright (c) Wiredesignz 2010-09-09
+ * @version 	5.3.4
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ class CI extends CI_Base
 	public static $APP;
 	
 	public function __construct() {
+		
 		parent::__construct();
 		
 		/* assign the application instance */
