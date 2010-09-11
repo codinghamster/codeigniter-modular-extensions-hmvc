@@ -167,7 +167,7 @@ class Modules
 		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {
 				$fullpath = $location.$module.'/'.$base.$subpath;
-				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, $file);
+				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, ucfirst($file));
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
 		}
