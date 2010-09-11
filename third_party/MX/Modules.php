@@ -120,6 +120,7 @@ class Modules
 
 	/** Load a module file **/
 	public static function load_file($file, $path, $type = 'other', $result = TRUE)	{
+		
 		$file = str_replace(EXT, '', $file);		
 		$location = $path.$file.EXT;
 		
@@ -166,7 +167,7 @@ class Modules
 		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {
 				$fullpath = $location.$module.'/'.$base.$subpath;
-				if ($base == 'libraires/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, $file);
+				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, $file);
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
 		}
