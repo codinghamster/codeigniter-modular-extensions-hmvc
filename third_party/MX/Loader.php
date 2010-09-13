@@ -83,8 +83,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module helper **/
 	public function helper($helper) {
-		if (is_array($helper)) 
-			return $this->helpers($helper);
+		if (is_array($helper)) return $this->helpers($helper);
 		
 		if (isset($this->_ci_helpers[$helper]))	
 			return;
@@ -105,13 +104,18 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module language file **/
 	public function language($langfile, $lang = '', $return = FALSE)	{
+		if (is_array($langfile)) return $this->languages($langfile);
 		return CI::$APP->lang->load($langfile, $lang, $return, $this->_module);
 	}
 
+	/** Load an array of languages **/
+	public function languages($languages) {
+		foreach ($languages as $_language) $this->language($_language);	
+	}
+	
 	/** Load a module library **/
 	public function library($library, $params = NULL, $object_name = NULL) {
-		if (is_array($library)) 
-			return $this->libraries($library);		
+		if (is_array($library)) return $this->libraries($library);		
 		
 		$class = strtolower(end(explode('/', $library)));
 		
@@ -148,8 +152,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module model **/
 	public function model($model, $object_name = NULL, $connect = FALSE) {
-		if (is_array($model)) 
-			return $this->models($model);
+		if (is_array($model)) return $this->models($model);
 
 		($_alias = $object_name) OR $_alias = end(explode('/', $model));
 
@@ -181,8 +184,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module controller **/
 	public function module($module, $params = NULL)	{
-		if (is_array($module)) 
-			return $this->modules($module);
+		if (is_array($module)) return $this->modules($module);
 
 		$_alias = strtolower(end(explode('/', $module)));
 		CI::$APP->$_alias = Modules::load(array($module => $params));
@@ -196,8 +198,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module plugin **/
 	public function plugin($plugin)	{
-		if (is_array($plugin)) 
-			return $this->plugins($plugin);		
+		if (is_array($plugin)) return $this->plugins($plugin);		
 		
 		if (isset($this->_ci_plugins[$plugin]))	
 			return;
