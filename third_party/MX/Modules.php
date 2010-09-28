@@ -111,7 +111,11 @@ class Modules
 	public static function autoload($class) {
 		
 		/* don't autoload CI_ or MY_ prefixed classes */
-		if (strstr($class, 'CI_') OR strstr($class, 'MY_')) return;
+		if (strstr($class, 'CI_') || strstr($class, 'MY_')) return;
+
+		if(( ! CI_VERSION < 2) && is_file($location = APPPATH.'core/'.$class.EXT)) {
+			include_once $location;
+		}		
 		
 		if(is_file($location = APPPATH.'libraries/'.$class.EXT)) {
 			include_once $location;
