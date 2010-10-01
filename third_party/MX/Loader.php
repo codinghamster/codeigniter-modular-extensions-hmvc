@@ -1,7 +1,5 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-(class_exists('CI', FALSE)) OR require 'Ci.php';
-
 /**
  * Modular Extensions - HMVC
  *
@@ -300,3 +298,6 @@ class MX_Loader extends CI_Loader
 		}
 	}
 }
+
+/** load the CI class for Modular Separation **/
+(class_exists('CI', FALSE)) OR require 'Ci.php';
