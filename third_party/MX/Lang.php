@@ -1,7 +1,7 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 if (CI_VERSION < 2) {
-	eval('class CI_Lang extends CI_Language {}');
+	class CI_Lang extends CI_Language {}
 }
 
 /**
