@@ -129,8 +129,8 @@ class MX_Loader extends CI_Loader
 			($path2) AND $params = Modules::load_file($file, $path2, 'config');
 		}	
 			
-		if ($path === FALSE) {		
-			parent::_ci_load_class($library, $params, $object_name);
+		if ($path === FALSE) {
+			$this->_ci_load_class($library, $params, $object_name);
 			$_alias = $this->_ci_classes[$class];
 		} else {		
 			Modules::load_file($_library, $path);
