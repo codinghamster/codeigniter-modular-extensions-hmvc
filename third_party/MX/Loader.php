@@ -218,7 +218,7 @@ class MX_Loader extends CI_Loader
 	public function view($view, $vars = array(), $return = FALSE) {
 		list($path, $view) = Modules::find($view, $this->_module, 'views/');
 		$this->_ci_view_path = $path;
-		return parent::_ci_load(array('_ci_view' => $view, '_ci_vars' => parent::_ci_object_to_array($vars), '_ci_return' => $return));
+		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
 	}
 
 	/** Assign libraries to models **/
@@ -230,6 +230,10 @@ class MX_Loader extends CI_Loader
 
 	public function _ci_is_instance() {}
 
+	public function _ci_get_component($component) {
+		return CI::$APP->$component;
+	}  
+	
 	public function __get($var) {
 		return CI::$APP->$var;
 	}
