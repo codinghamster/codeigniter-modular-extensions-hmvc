@@ -66,12 +66,12 @@ class CI extends CI_Base
 		/* assign the core loader */
 		$this->load = load_class('Loader', 'core');
 		
-		/* autoload application items */
-		$this->load->_ci_autoloader();
-		
 		/* re-assign language and config for modules */
 		if ( ! is_a($this->lang, 'MX_Lang')) $this->lang = new MX_Lang;
 		if ( ! is_a($this->config, 'MX_Config')) $this->config = new MX_Config;
+		
+		/* autoload application items */
+		$this->load->_ci_autoloader();
 	}
 }
 
