@@ -79,11 +79,11 @@ class Modules
 	public static function load($module) {
 		(is_array($module)) ? list($module, $params) = each($module) : $params = NULL;	
 		
-		/* get the controller class name */
-		$class = strtolower(end(explode('/', $module)));
+		/* get the requested controller class name */
+		$alias = strtolower(end(explode('/', $module)));
 
 		/* return an existing controller from the registry */
-		if (isset(self::$registry[$class])) return self::$registry[$class];
+		if (isset(self::$registry[$alias])) return self::$registry[$alias];
 			
 		/* get the module path */
 		$segments = explode('/', $module);
@@ -101,19 +101,19 @@ class Modules
 		$class = $class.CI::$APP->config->item('controller_suffix');
 		self::load_file($class, $path);
 		
-		/* create the new controller */
-		$class = ucfirst($class);
-		$controller = new $class($params);
-		return $controller;
+		/* create and register the new controller */
+		$controller = ucfirst($class);	
+		self::$registry[$alias] = new $controller($params);
+		return self::$registry[$alias];
 	}
 	
 	/** Library base class autoload **/
 	public static function autoload($class) {
 		
 		/* don't autoload CI_ or MY_ prefixed classes */
-		if (strstr($class, 'CI_') || strstr($class, 'MY_')) return;
+		if (strstr($class, 'CI_') OR strstr($class, 'MY_')) return;
 
-		if(( ! CI_VERSION < 2) && is_file($location = APPPATH.'core/'.$class.EXT)) {
+		if(( ! CI_VERSION < 2) AND is_file($location = APPPATH.'core/'.$class.EXT)) {
 			include_once $location;
 		}		
 		
@@ -171,13 +171,13 @@ class Modules
 		foreach (Modules::$locations as $location => $offset) {					
 			foreach($modules as $module => $subpath) {
 				$fullpath = $location.$module.'/'.$base.$subpath;
-				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) return array($fullpath, ucfirst($file));
+				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) return array($fullpath, ucfirst($file));
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
 		}
 		
 		/* is the file in an application directory? */
-		if ($base == 'views/' || $base == 'models/' || $base == 'plugins/') {
+		if ($base == 'views/' OR $base == 'models/' OR $base == 'plugins/') {
 			if (is_file(APPPATH.$base.$path.$file_ext)) return array(APPPATH.$base.$path, $file);
 			show_error("Unable to locate the file: {$path}{$file_ext}");
 		}

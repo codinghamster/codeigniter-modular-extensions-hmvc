@@ -43,10 +43,7 @@ class MX_Controller
 	public function __construct() {
 		
 		$class = str_replace(CI::$APP->config->item('controller_suffix'), '', get_class($this));
-		log_message('debug', $class." MX_Controller Initialized");
-		
-		/* register this controller */
-		Modules::$registry[strtolower($class)] =& $this;	
+		log_message('debug', $class." MX_Controller Initialized");	
 		
 		/* copy a loader instance and initialize */
 		$this->load = clone load_class('Loader');
