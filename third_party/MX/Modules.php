@@ -110,11 +110,19 @@ class Modules
 	/** Library base class autoload **/
 	public static function autoload($class) {
 		
-		/* don't autoload CI_ or MY_ prefixed classes */
-		if (strstr($class, 'CI_') OR strstr($class, 'MY_')) return;
+		/* don't autoload CI_ prefixed classes or those using the config subclass_prefix */
+		if (strstr($class, 'CI_') OR strstr($class, config_item('sublass_prefix'))) return;
 
+		/* autoload Modular Extensions MX core classes */
+		if (strstr($class, 'MX_') AND is_file($location = APPPATH.'third_party/MX/'.substr($class, 3).EXT)) {
+			include_once $location;
+			return;
+		}
+		
+		/* autoload CI 2 core classes */
 		if(( ! CI_VERSION < 2) AND is_file($location = APPPATH.'core/'.$class.EXT)) {
 			include_once $location;
+			return;
 		}		
 		
 		if(is_file($location = APPPATH.'libraries/'.$class.EXT)) {
