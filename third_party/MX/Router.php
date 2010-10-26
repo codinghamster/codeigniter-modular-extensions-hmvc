@@ -1,7 +1,7 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /* load the MX core module class */
-require 'Modules.php';
+require dirname(__FILE__).'/Modules.php';
 
 /**
  * Modular Extensions - HMVC
@@ -50,6 +50,11 @@ class MX_Router extends CI_Router
 		
 		/* use a default 404 controller */
 		if (isset($this->routes['404']) AND $segments = explode('/', $this->routes['404'])) {
+			if ($located = $this->locate($segments)) return $located;
+		}	
+			
+		/* use a default 404_override controller CI 2.0 */
+		if (isset($this->routes['404_override']) AND $segments = explode('/', $this->routes['404_override'])) {
 			if ($located = $this->locate($segments)) return $located;
 		}
 		
