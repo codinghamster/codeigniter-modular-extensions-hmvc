@@ -49,6 +49,9 @@ class CI
 		/* re-assign language and config for modules */
 		if ( ! is_a(self::$APP->lang, 'MX_Lang')) self::$APP->lang = new MX_Lang;
 		if ( ! is_a(self::$APP->config, 'MX_Config')) self::$APP->config = new MX_Config;
+		
+		/* autoload module items */
+		self::$APP->load->_autoloader(array());
 	}
 }
 
