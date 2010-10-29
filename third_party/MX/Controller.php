@@ -36,12 +36,12 @@ require dirname(__FILE__).'/Base.php';
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
-class MX_Controller
-{			
+class MX_Controller 
+{
 	public $autoload = array();
 	
-	public function __construct() {
-		
+	public function __construct() 
+	{
 		$class = str_replace(CI::$APP->config->item('controller_suffix'), '', get_class($this));
 		log_message('debug', $class." MX_Controller Initialized");	
 		
@@ -53,7 +53,7 @@ class MX_Controller
 		$this->load->_autoloader($this->autoload);
 	}
 	
-	public function __get($var) {
-		return CI::$APP->$var;
+	public function __get($class) {
+		return CI::$APP->$class;
 	}
 }
