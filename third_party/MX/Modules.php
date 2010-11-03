@@ -177,16 +177,19 @@ class Modules
 		}	
 
 		foreach (Modules::$locations as $location => $offset) {					
-			foreach($modules as $module => $subpath) {
+			foreach($modules as $module => $subpath) {			
 				$fullpath = $location.$module.'/'.$base.$subpath;
-				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) return array($fullpath, ucfirst($file));
+				
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
+				
+				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) 
+					return array($fullpath, ucfirst($file));
 			}
 		}
 		
 		/* is the file in an application directory? */
 		if ($base == 'views/' OR $base == 'models/' OR $base == 'plugins/') {
-			if (is_file(APPPATH.$base.$path.$file_ext)) return array(APPPATH.$base.$path, $file);
+			if (is_file(APPPATH.$base.$path.$file_ext)) return array(APPPATH.$base.$path, $file);	
 			show_error("Unable to locate the file: {$path}{$file_ext}");
 		}
 

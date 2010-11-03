@@ -115,12 +115,12 @@ class MX_Loader extends CI_Loader
 	public function library($library, $params = NULL, $object_name = NULL) {
 		if (is_array($library)) return $this->libraries($library);		
 		
-		$class = strtolower(end(explode('/', $library)));
+		$class = end(explode('/', $library));
 		
 		if (isset($this->_ci_classes[$class]) AND $_alias = $this->_ci_classes[$class])
 			return CI::$APP->$_alias;
 			
-		($_alias = $object_name) OR $_alias = $class;
+		($_alias = strtolower($object_name)) OR $_alias = strtolower($class);
 		list($path, $_library) = Modules::find($library, $this->_module, 'libraries/');
 		
 		/* load library config file as params */
@@ -157,7 +157,7 @@ class MX_Loader extends CI_Loader
 		if (in_array($_alias, $this->_ci_models, TRUE)) 
 			return CI::$APP->$_alias;
 		
-		list($path, $model) = Modules::find($model, $this->_module, 'models/');
+		list($path, $model) = Modules::find(strtolower($model), $this->_module, 'models/');
 		(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
 
 		if ($connect !== FALSE) {
