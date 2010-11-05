@@ -56,12 +56,10 @@ class Modules
 		if(($pos = strrpos($module, '/')) != FALSE) {
 			$method = substr($module, $pos + 1);		
 			$module = substr($module, 0, $pos);
-		}
-	
-		$controller = end(explode('/', $module));
-		if ($controller != $module) $controller = $module.'/'.$controller;
-		
-		if($class = self::load($controller)) {
+			if ($method == $module) $method = 'index';
+		}		
+
+		if($class = self::load($module)) {
 			
 			if (method_exists($class, $method))	{
 				ob_start();
@@ -72,7 +70,7 @@ class Modules
 			}
 		}
 		
-		log_message('error', "Module controller failed to run: {$controller}/{$method}");
+		log_message('error', "Module controller failed to run: {$module}/{$method}");
 	}
 	
 	/** Load a module controller **/
