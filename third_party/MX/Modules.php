@@ -56,8 +56,7 @@ class Modules
 		if(($pos = strrpos($module, '/')) != FALSE) {
 			$method = substr($module, $pos + 1);		
 			$module = substr($module, 0, $pos);
-			if ($method == $module) $method = 'index';
-		}		
+		}
 
 		if($class = self::load($module)) {
 			
