@@ -70,7 +70,7 @@ class CI extends CI_Base
 			}
 		
 			/* assign the core loader */
-			$this->load = load_class('Loader', 'core');
+			$this->load = load_class('Loader');
 			
 			/* autoload application items */
 			$this->load->_ci_autoloader();
