@@ -52,30 +52,33 @@ class CI extends CI_Base
 		
 		parent::__construct();
 		
-		/* assign the core classes */
-		$classes = (CI_VERSION < 2) ? array(
-			'config'	=> 'Config',
-			'input'		=> 'Input',
-			'benchmark'	=> 'Benchmark',
-			'uri'		=> 'URI',
-			'output'	=> 'Output',
-			'lang'		=> 'Language',
-			'router'	=> 'Router'
-		) : is_loaded();
+		if (CI_VERSION < 2) {
+			
+			/* assign the core classes */
+			$classes = array(
+				'config'	=> 'Config',
+				'input'		=> 'Input',
+				'benchmark'	=> 'Benchmark',
+				'uri'		=> 'URI',
+				'output'	=> 'Output',
+				'lang'		=> 'Language',
+				'router'	=> 'Router'
+			);
+			
+			foreach ($classes as $key => $class) {	
+				$this->$key = load_class($class);	
+			}
 		
-		foreach ($classes as $key => $class) {
-			$this->$key = load_class($class);	
+			/* assign the core loader */
+			$this->load = load_class('Loader', 'core');
+			
+			/* autoload application items */
+			$this->load->_ci_autoloader();
 		}
-		
-		/* assign the core loader */
-		$this->load = load_class('Loader', 'core');
 		
 		/* re-assign language and config for modules */
 		if ( ! is_a($this->lang, 'MX_Lang')) $this->lang = new MX_Lang;
 		if ( ! is_a($this->config, 'MX_Config')) $this->config = new MX_Config;
-		
-		/* autoload application items */
-		$this->load->_ci_autoloader();
 	}
 }
 
