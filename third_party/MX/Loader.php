@@ -254,13 +254,14 @@ class MX_Loader extends CI_Loader
 		if ( ! file_exists($_ci_path)) 
 			show_error('Unable to load the requested file: '.$_ci_file);
 
-		if (is_array($_ci_vars)) $this->_ci_cached_vars += $_ci_vars;
+		if (is_array($_ci_vars)) 
+			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
 		
 		extract($this->_ci_cached_vars);
 
 		ob_start();
 
-		if ((bool) @ini_get('short_open_tag') === FALSE AND $this->config->item('rewrite_short_tags') == TRUE) {
+		if ((bool) @ini_get('short_open_tag') === FALSE AND CI::$APP->config->item('rewrite_short_tags') == TRUE) {
 			echo eval('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
 		} else {
 			include($_ci_path); 
@@ -273,7 +274,7 @@ class MX_Loader extends CI_Loader
 		if (ob_get_level() > $this->_ci_ob_level + 1) {
 			ob_end_flush();
 		} else {
-			$this->output->append_output(ob_get_clean());
+			CI::$APP->output->append_output(ob_get_clean());
 		}
 	}	
 	
