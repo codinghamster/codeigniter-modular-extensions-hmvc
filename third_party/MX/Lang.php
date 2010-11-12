@@ -1,9 +1,5 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-if (CI_VERSION < 2) {
-	class CI_Lang extends CI_Language {}
-}
-
 /**
  * Modular Extensions - HMVC
  *
@@ -37,6 +33,10 @@ if (CI_VERSION < 2) {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
+if (CI_VERSION < 2) {
+	class CI_Lang extends CI_Language {}
+}
+
 class MX_Lang extends CI_Lang
 {
 	public function load($langfile, $lang = '', $return = FALSE, $_module = NULL)	{
