@@ -139,7 +139,7 @@ class MX_Loader extends CI_Loader
 			$this->_ci_classes[$class] = $_alias;
 		}
 		
-		$this->_ci_assign_to_models();
+		if (CI_VERSION < 2) $this->_ci_assign_to_models();
 		return CI::$APP->$_alias;
     }
 
@@ -169,7 +169,7 @@ class MX_Loader extends CI_Loader
 		$model = ucfirst($model);
 		
 		CI::$APP->$_alias = new $model();
-		$this->_ci_assign_to_models();
+		if (CI_VERSION < 2) $this->_ci_assign_to_models();
 		
 		$this->_ci_models[] = $_alias;
 		return CI::$APP->$_alias;
