@@ -75,7 +75,7 @@ class MX_Loader extends CI_Loader
 			return DB($params, $active_record);
 			
 		CI::$APP->db = DB($params, $active_record);
-		$this->_ci_assign_to_models();
+		if (CI_VERSION < 2) $this->_ci_assign_to_models();
 		return CI::$APP->db;
 	}
 
@@ -260,7 +260,7 @@ class MX_Loader extends CI_Loader
 
 		ob_start();
 
-		if ((bool) @ini_get('short_open_tag') === FALSE AND config_item('rewrite_short_tags') == TRUE) {
+		if ((bool) @ini_get('short_open_tag') === FALSE AND $this->config->item('rewrite_short_tags') == TRUE) {
 			echo eval('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
 		} else {
 			include($_ci_path); 
