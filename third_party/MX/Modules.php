@@ -111,7 +111,7 @@ class Modules
 		if (strstr($class, 'CI_') OR strstr($class, config_item('subclass_prefix'))) return;
 
 		/* autoload Modular Extensions MX core classes */
-		if (strstr($class, 'MX_') AND is_file($location = APPPATH.'third_party/MX/'.substr($class, 3).EXT)) {
+		if (strstr($class, 'MX_') AND is_file($location = dirname(__FILE__).'/'.substr($class, 3).EXT)) {
 			include_once $location;
 			return;
 		}
@@ -124,6 +124,7 @@ class Modules
 		
 		if(is_file($location = APPPATH.'libraries/'.$class.EXT)) {
 			include_once $location;
+			return;
 		}		
 	}
 

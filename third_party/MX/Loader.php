@@ -42,7 +42,7 @@ class MX_Loader extends CI_Loader
 	public function __construct() {
 		
 		parent::__construct();
-		
+	
 		/* set the module name for Modular Separation */
 		$this->_module = CI::$APP->router->fetch_module();
 	}
@@ -237,6 +237,76 @@ class MX_Loader extends CI_Loader
 	public function __get($var) {
 		return CI::$APP->$var;
 	}
+
+	function _ci_load($_ci_data)
+	{
+		foreach (array('_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val)
+		{
+			$$_ci_val = ( ! isset($_ci_data[$_ci_val])) ? FALSE : $_ci_data[$_ci_val];
+		}
+
+		if ($_ci_path == '')
+		{
+			$_ci_ext = pathinfo($_ci_view, PATHINFO_EXTENSION);
+			$_ci_file = ($_ci_ext == '') ? $_ci_view.EXT : $_ci_view;
+			$_ci_path = $this->_ci_view_path.$_ci_file;
+		}
+		else
+		{
+			$_ci_x = explode('/', $_ci_path);
+			$_ci_file = end($_ci_x);
+		}
+
+		if ( ! file_exists($_ci_path))
+		{
+			show_error('Unable to load the requested file: '.$_ci_file);
+		}
+
+		$_ci_CI = CI_Base::get_instance();
+		foreach (get_object_vars($_ci_CI) as $_ci_key => $_ci_var)
+		{
+			if ( ! isset($this->$_ci_key))
+			{
+				$this->$_ci_key = $_ci_CI->$_ci_key;
+			}
+		}
+
+		if (is_array($_ci_vars))
+		{
+			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
+		}
+		extract($this->_ci_cached_vars);
+
+		ob_start();
+
+		if ((bool) @ini_get('short_open_tag') === FALSE AND config_item('rewrite_short_tags') == TRUE)
+		{
+			echo eval('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
+		}
+		else
+		{
+			include($_ci_path); 
+		}
+
+		log_message('debug', 'File loaded: '.$_ci_path);
+
+		if ($_ci_return === TRUE)
+		{
+			$buffer = ob_get_contents();
+			@ob_end_clean();
+			return $buffer;
+		}
+
+		if (ob_get_level() > $this->_ci_ob_level + 1)
+		{
+			ob_end_flush();
+		}
+		else
+		{
+			$_ci_CI->output->append_output(ob_get_contents());
+			@ob_end_clean();
+		}
+	}	
 	
 	/** Autload module items **/
 	public function _autoloader($autoload) {

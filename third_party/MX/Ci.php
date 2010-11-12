@@ -36,11 +36,16 @@ require_once dirname(__FILE__).'/Config.php';
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
+if ( ! CI_VERSION < 2) {
+	class CI_Base extends CI_Controller	{}
+}
+
 class CI
 {
 	public static $APP;
 	
 	public function __construct() {
+		
 		self::$APP = CI_Base::get_instance();
 		
 		/* assign the core loader */

@@ -37,16 +37,20 @@ require_once dirname(__FILE__).'/Config.php';
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
+if ( ! (CI_VERSION < 2)) {
+	class CI_Base extends CI_Controller	{}
+}
+
 class CI extends CI_Base
 {
 	public static $APP;
 	
 	public function __construct() {
 		
-		parent::__construct();
-		
 		/* assign the application instance */
-		self::$APP = CI_Base::get_instance();
+		self::$APP = $this;
+		
+		parent::__construct();
 		
 		/* assign the core classes */
 		$classes = (CI_VERSION < 2) ? array(
