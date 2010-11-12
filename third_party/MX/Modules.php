@@ -117,7 +117,7 @@ class Modules
 		}
 		
 		/* autoload CI 2 core classes */
-		if(( ! CI_VERSION < 2) AND is_file($location = APPPATH.'core/'.$class.EXT)) {
+		if( ! (CI_VERSION < 2) AND is_file($location = APPPATH.'core/'.$class.EXT)) {
 			include_once $location;
 			return;
 		}		
