@@ -43,17 +43,17 @@ class MX_Loader extends CI_Loader
 		
 		parent::__construct();
 	
-		/* set the module name */
+		/* set the module name for Modular Separation */
 		$this->_module = CI::$APP->router->fetch_module();
 		
 		/* add this module path to the loader variables */
-		if ( ! (CI_VERSION < 2) AND $this->_module) $this->_add_module_paths($this->_module);
+		$this->_add_module_paths($this->_module);
 	}
 	
 	/** Initialize the module **/
 	public function _init() {
 		
-		/* set the module name */
+		/* set the module name for Modular Extensions */
 		$this->_module = CI::$APP->router->fetch_module();
 		
 		/* references to ci loader variables */
@@ -62,11 +62,13 @@ class MX_Loader extends CI_Loader
  		}
  		
  		/* add this module path to the loader variables */
- 		if ( ! (CI_VERSION < 2) AND $this->_module) $this->_add_module_paths($this->_module);
+ 		$this->_add_module_paths($this->_module);
 	}
 
 	/** Add a module path loader variables **/
-	public function _add_module_paths($module) {
+	public function _add_module_paths($module = '') {
+		
+		if (CI_VERSION < 2 OR empty($module)) return;
 		
 		foreach (Modules::$locations as $location => $offset) {
 			
