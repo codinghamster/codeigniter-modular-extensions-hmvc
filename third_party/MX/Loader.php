@@ -47,8 +47,8 @@ class MX_Loader extends CI_Loader
 		$this->_module = CI::$APP->router->fetch_module();
 		
 		/* add this module path to the loader variables */
-		if ( ! (CI_VERSION < 2) AND $this->module) $this->_add_module_paths($this->_module);
-	}
+		$this->_add_module_paths($this->_module);
+}
 	
 	/** Initialize the module **/
 	public function _init() {
@@ -64,7 +64,7 @@ class MX_Loader extends CI_Loader
 	/** Add a module path loader variables **/
 	public function _add_module_paths($module = '') {
 		
-		if (empty($module)) return;
+		if (CI_VERSION < 2 OR empty($module)) return;
 		
 		foreach (Modules::$locations as $location => $offset) {
 			
