@@ -82,7 +82,8 @@ class MX_Loader extends CI_Loader
 
 	/** Load the database drivers **/
 	public function database($params = '', $return = FALSE, $active_record = NULL) {
-		if (class_exists('CI_DB', FALSE) AND $return == FALSE AND $active_record == NULL) 
+		
+		if (class_exists('CI_DB', FALSE) AND $return == FALSE AND $active_record == NULL AND isset(CI::$APP->db) AND is_object(CI::$APP->db)) 
 			return;
 
 		require_once BASEPATH.'database/DB'.EXT;
