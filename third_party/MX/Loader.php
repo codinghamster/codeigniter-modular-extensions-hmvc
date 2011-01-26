@@ -182,15 +182,16 @@ class MX_Loader extends CI_Loader
 		}
 		
 		/* check module */
-		list($path, $model) = Modules::find(strtolower($model), $this->_module, 'models/');
+		list($path, $_model) = Modules::find(strtolower($model), $this->_module, 'models/');
 		
 		if ($path == FALSE) {
 			/* check application & packages */
 			parent::model($model, $object_name);
-		} else {
-			Modules::load_file($model, $path);
 			
-			$model = ucfirst($_alias);
+		} else {
+			Modules::load_file($_model, $path);
+			
+			$model = ucfirst($_model);
 			CI::$APP->$_alias = new $model();
 			
 			if (CI_VERSION < 2) $this->_ci_assign_to_models();
