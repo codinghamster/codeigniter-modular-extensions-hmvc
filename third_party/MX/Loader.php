@@ -180,17 +180,13 @@ class MX_Loader extends CI_Loader
 			if ($connect === TRUE) $connect = '';
 			$this->database($connect, FALSE, TRUE);
 		}
-
-		$mod_path = strtolower($model);
 		
 		/* check module */
-		list($path, $model) = Modules::find($mod_path, $this->_module, 'models/');
+		list($path, $model) = Modules::find(strtolower($model), $this->_module, 'models/');
 		
 		if ($path == FALSE) {
-			
 			/* check application & packages */
-			parent::model($mod_path, $object_name);
-		
+			parent::model($model, $object_name);
 		} else {
 			Modules::load_file($model, $path);
 			

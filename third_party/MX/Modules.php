@@ -160,9 +160,9 @@ class Modules
 	* Also scans application directories for models, plugins and views.
 	* Generates fatal error if file not found.
 	**/
-	public static function find($file, $module, $base) {
+	public static function find($file_path, $module, $base) {
 	
-		$segments = explode('/', $file);
+		$segments = explode('/', $file_path);
 
 		$file = array_pop($segments);
 		$file_ext = strpos($file, '.') ? $file : $file.EXT;
@@ -191,7 +191,7 @@ class Modules
 			show_error("Unable to locate the file: {$path}{$file_ext}");
 		}
 
-		return array(FALSE, $file);	
+		return array(FALSE, $file_path);	
 	}
 	
 	/** Parse module routes **/
