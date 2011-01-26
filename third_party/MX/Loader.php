@@ -42,13 +42,13 @@ class MX_Loader extends CI_Loader
 	public function __construct() {
 		
 		parent::__construct();
-	
+		
 		/* set the module name */
 		$this->_module = CI::$APP->router->fetch_module();
 		
 		/* add this module path to the loader variables */
 		$this->_add_module_paths($this->_module);
-}
+	}
 	
 	/** Initialize the module **/
 	public function _init() {
@@ -173,22 +173,32 @@ class MX_Loader extends CI_Loader
 
 		if (in_array($_alias, $this->_ci_models, TRUE)) 
 			return CI::$APP->$_alias;
-		
-		list($path, $model) = Modules::find(strtolower($model), $this->_module, 'models/');
+			
 		(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
 
-		if ($connect !== FALSE) {
+		if ($connect !== FALSE AND ! class_exists('CI_DB')) {
 			if ($connect === TRUE) $connect = '';
 			$this->database($connect, FALSE, TRUE);
 		}
 
-		Modules::load_file($model, $path);
-		$model = ucfirst($model);
+		$model = strtolower($model);
 		
-		CI::$APP->$_alias = new $model();
-		if (CI_VERSION < 2) $this->_ci_assign_to_models();
+		/* check module */
+		list($path, $model) = Modules::find($model, $this->_module, 'models/');
 		
-		$this->_ci_models[] = $_alias;
+		/* check application & packages */
+		if ($path == FALSE) {
+			parent::model($model, $object_name);
+		} else {
+			Modules::load_file($model, $path);
+			
+			$model = ucfirst($_alias);
+			CI::$APP->$_alias = new $model();
+			
+			if (CI_VERSION < 2) $this->_ci_assign_to_models();
+			$this->_ci_models[] = $_alias;
+		}
+		
 		return CI::$APP->$_alias;
 	}
 
