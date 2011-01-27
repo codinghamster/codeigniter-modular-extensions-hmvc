@@ -147,12 +147,17 @@ class MX_Loader extends CI_Loader
 		}	
 			
 		if ($path === FALSE) {
+			
 			$this->_ci_load_class($library, $params, $object_name);
 			$_alias = $this->_ci_classes[$class];
+			
 		} else {		
+			
 			Modules::load_file($_library, $path);
+			
 			$library = ucfirst($_library);
 			CI::$APP->$_alias = new $library($params);
+			
 			$this->_ci_classes[$class] = $_alias;
 		}
 		
@@ -174,21 +179,23 @@ class MX_Loader extends CI_Loader
 		if (in_array($_alias, $this->_ci_models, TRUE)) 
 			return CI::$APP->$_alias;
 			
-		(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
-
-		if ($connect !== FALSE AND ! class_exists('CI_DB')) {
-			if ($connect === TRUE) $connect = '';
-			$this->database($connect, FALSE, TRUE);
-		}
-		
 		/* check module */
 		list($path, $_model) = Modules::find(strtolower($model), $this->_module, 'models/');
 		
 		if ($path == FALSE) {
+			
 			/* check application & packages */
 			parent::model($model, $object_name);
 			
 		} else {
+			
+			(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
+			
+			if ($connect !== FALSE AND ! class_exists('CI_DB')) {
+				if ($connect === TRUE) $connect = '';
+				$this->database($connect, FALSE, TRUE);
+			}
+			
 			Modules::load_file($_model, $path);
 			
 			$model = ucfirst($_model);
