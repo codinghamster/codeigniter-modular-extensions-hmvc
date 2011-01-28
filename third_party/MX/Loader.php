@@ -12,7 +12,7 @@
  *
  * Install this file as application/third_party/MX/Loader.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-11-12
+ * @copyright	Copyright (c) Wiredesignz
  * @version 	5.3.5
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -69,8 +69,8 @@ class MX_Loader extends CI_Loader
 		foreach (Modules::$locations as $location => $offset) {
 			
 			/* only add a module path if it exists */
-			if (is_dir($module_path = $location.$module)) {
-				array_unshift($this->_ci_model_paths, $module_path.'/');
+			if (is_dir($module_path = $location.$module.'/')) {
+				array_unshift($this->_ci_model_paths, $module_path);
 			}
 		}
 	}	
@@ -92,7 +92,7 @@ class MX_Loader extends CI_Loader
 			return DB($params, $active_record);
 			
 		CI::$APP->db = DB($params, $active_record);
-		if (CI_VERSION < 2) $this->_ci_assign_to_models();
+		$this->_ci_assign_to_models();
 		return CI::$APP->db;
 	}
 
@@ -161,7 +161,7 @@ class MX_Loader extends CI_Loader
 			$this->_ci_classes[$class] = $_alias;
 		}
 		
-		if (CI_VERSION < 2) $this->_ci_assign_to_models();
+		$this->_ci_assign_to_models();
 		return CI::$APP->$_alias;
     }
 
@@ -191,7 +191,7 @@ class MX_Loader extends CI_Loader
 			
 			(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
 			
-			if ($connect !== FALSE AND ! class_exists('CI_DB')) {
+			if ($connect !== FALSE AND ! class_exists('CI_DB', FALSE)) {
 				if ($connect === TRUE) $connect = '';
 				$this->database($connect, FALSE, TRUE);
 			}
@@ -201,7 +201,7 @@ class MX_Loader extends CI_Loader
 			$model = ucfirst($_model);
 			CI::$APP->$_alias = new $model();
 			
-			if (CI_VERSION < 2) $this->_ci_assign_to_models();
+			$this->_ci_assign_to_models();
 			$this->_ci_models[] = $_alias;
 		}
 		
@@ -256,9 +256,10 @@ class MX_Loader extends CI_Loader
 
 	/** Assign libraries to models **/
 	public function _ci_assign_to_models() {
-		foreach ($this->_ci_models as $model) {
-			CI::$APP->$model->_assign_libraries();
-		}
+		if (CI_VERSION < 2)
+			foreach ($this->_ci_models as $model) {
+				CI::$APP->$model->_assign_libraries();
+			}
 	}
 
 	public function _ci_is_instance() {}

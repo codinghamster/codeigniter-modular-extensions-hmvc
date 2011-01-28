@@ -15,7 +15,7 @@ require_once dirname(__FILE__).'/Config.php';
  *
  * Install this file as application/third_party/MX/Ci.php
  *
- * @copyright	Copyright (c) Wiredesignz 2010-11-12
+ * @copyright	Copyright (c) Wiredesignz
  * @version 	5.3.5
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
