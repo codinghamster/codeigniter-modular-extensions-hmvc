@@ -12,7 +12,7 @@
  *
  * Install this file as application/third_party/MX/Lang.php
  *
- * @copyright	Copyright (c) Wiredesignz
+ * @copyright	Copyright (c) 2011 Wiredesignz
  * @version 	5.3.5
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
