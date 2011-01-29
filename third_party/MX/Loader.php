@@ -13,7 +13,7 @@
  * Install this file as application/third_party/MX/Loader.php
  *
  * @copyright	Copyright (c) 2011 Wiredesignz
- * @version 	5.3.5
+ * @version 	5.4
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ class MX_Loader extends CI_Loader
 		/* references to ci loader variables */
 		foreach (get_class_vars('CI_Loader') as $var => $val) {
 			$this->$var =& CI::$APP->load->$var;
- 		}
+		}
  		
  		$this->__construct();
 	}
@@ -64,7 +64,7 @@ class MX_Loader extends CI_Loader
 	/** Add a module path loader variables **/
 	public function _add_module_paths($module = '') {
 		
-		if (CI_VERSION < 2 OR empty($module)) return;
+		if (empty($module)) return;
 		
 		foreach (Modules::$locations as $location => $offset) {
 			
@@ -88,25 +88,23 @@ class MX_Loader extends CI_Loader
 
 		require_once BASEPATH.'database/DB'.EXT;
 
-		if ($return === TRUE) 
-			return DB($params, $active_record);
+		if ($return === TRUE) return DB($params, $active_record);
 			
 		CI::$APP->db = DB($params, $active_record);
-		$this->_ci_assign_to_models();
+		
 		return CI::$APP->db;
 	}
 
 	/** Load a module helper **/
 	public function helper($helper) {
+		
 		if (is_array($helper)) return $this->helpers($helper);
 		
-		if (isset($this->_ci_helpers[$helper]))	
-			return;
+		if (isset($this->_ci_helpers[$helper]))	return;
 
 		list($path, $_helper) = Modules::find($helper.'_helper', $this->_module, 'helpers/');
 
-		if ($path === FALSE) 
-			return parent::helper($helper);
+		if ($path === FALSE) return parent::helper($helper);
 
 		Modules::load_file($_helper, $path);
 		$this->_ci_helpers[$_helper] = TRUE;
@@ -119,7 +117,9 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module language file **/
 	public function language($langfile, $lang = '', $return = FALSE)	{
+		
 		if (is_array($langfile)) return $this->languages($langfile);
+		
 		return CI::$APP->lang->load($langfile, $lang, $return, $this->_module);
 	}
 
@@ -130,6 +130,7 @@ class MX_Loader extends CI_Loader
 	
 	/** Load a module library **/
 	public function library($library, $params = NULL, $object_name = NULL) {
+		
 		if (is_array($library)) return $this->libraries($library);		
 		
 		$class = end(explode('/', $library));
@@ -161,7 +162,6 @@ class MX_Loader extends CI_Loader
 			$this->_ci_classes[$class] = $_alias;
 		}
 		
-		$this->_ci_assign_to_models();
 		return CI::$APP->$_alias;
     }
 
@@ -172,6 +172,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module model **/
 	public function model($model, $object_name = NULL, $connect = FALSE) {
+		
 		if (is_array($model)) return $this->models($model);
 
 		($_alias = $object_name) OR $_alias = end(explode('/', $model));
@@ -201,7 +202,6 @@ class MX_Loader extends CI_Loader
 			$model = ucfirst($_model);
 			CI::$APP->$_alias = new $model();
 			
-			$this->_ci_assign_to_models();
 			$this->_ci_models[] = $_alias;
 		}
 		
@@ -215,6 +215,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module controller **/
 	public function module($module, $params = NULL)	{
+		
 		if (is_array($module)) return $this->modules($module);
 
 		$_alias = strtolower(end(explode('/', $module)));
@@ -229,6 +230,7 @@ class MX_Loader extends CI_Loader
 
 	/** Load a module plugin **/
 	public function plugin($plugin)	{
+		
 		if (is_array($plugin)) return $this->plugins($plugin);		
 		
 		if (isset($this->_ci_plugins[$plugin]))	
@@ -252,14 +254,6 @@ class MX_Loader extends CI_Loader
 		list($path, $view) = Modules::find($view, $this->_module, 'views/');
 		$this->_ci_view_path = $path;
 		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
-	}
-
-	/** Assign libraries to models **/
-	public function _ci_assign_to_models() {
-		if (CI_VERSION < 2)
-			foreach ($this->_ci_models as $model) {
-				CI::$APP->$model->_assign_libraries();
-			}
 	}
 
 	public function _ci_is_instance() {}
