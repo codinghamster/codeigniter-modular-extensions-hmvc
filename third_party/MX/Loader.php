@@ -262,13 +262,49 @@ class MX_Loader extends CI_Loader
 		return CI::$APP->$component;
 	} 
 
+	public function __get($class) {
+		return CI::$APP->$class;
+	}
+
 	function _ci_load($_ci_data) {
 		
-		if ($_ci_data['_ci_return'] == TRUE) return parent::_ci_load($_ci_data);
+		foreach (array('_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val) {
+			$$_ci_val = ( ! isset($_ci_data[$_ci_val])) ? FALSE : $_ci_data[$_ci_val];
+		}
+
+		if ($_ci_path == '') {
+			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
+			$_ci_path = $this->_ci_view_path.$_ci_file;
+		} else {
+			$_ci_file = end(explode('/', $_ci_path));
+		}
+
+		if ( ! file_exists($_ci_path)) 
+			show_error('Unable to load the requested file: '.$_ci_file);
+
+		if (is_array($_ci_vars)) 
+			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
 		
-		$_ci_data['_ci_return'] = TRUE;
-		echo parent::_ci_load($_ci_data);
-	}
+		extract($this->_ci_cached_vars);
+
+		ob_start();
+
+		if ((bool) @ini_get('short_open_tag') === FALSE AND CI::$APP->config->item('rewrite_short_tags') == TRUE) {
+			echo eval('?>'.preg_replace("/;*\s*\?>/", "; ?>", str_replace('<?=', '<?php echo ', file_get_contents($_ci_path))));
+		} else {
+			include($_ci_path); 
+		}
+
+		log_message('debug', 'File loaded: '.$_ci_path);
+
+		if ($_ci_return == TRUE) return ob_get_clean();
+
+		if (ob_get_level() > 1 ) {
+			ob_end_flush();
+		} else {
+			CI::$APP->output->append_output(ob_get_clean());
+		}
+	}	
 	
 	/** Autoload module items **/
 	public function _autoloader($autoload) {
