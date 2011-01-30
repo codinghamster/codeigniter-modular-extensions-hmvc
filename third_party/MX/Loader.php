@@ -55,7 +55,7 @@ class MX_Loader extends CI_Loader
 		
 		/* references to ci loader variables */
 		foreach (get_class_vars('CI_Loader') as $var => $val) {
-			$this->$var =& CI::$APP->load->$var;
+			if ($var != '_ci_ob_level') $this->$var =& CI::$APP->load->$var;
 		}
  		
  		$this->__construct();
@@ -299,7 +299,7 @@ class MX_Loader extends CI_Loader
 
 		if ($_ci_return == TRUE) return ob_get_clean();
 
-		if (ob_get_level() > 1 ) {
+		if (ob_get_level() > $this->_ci_ob_level + 1) {
 			ob_end_flush();
 		} else {
 			CI::$APP->output->append_output(ob_get_clean());
