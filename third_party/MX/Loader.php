@@ -190,7 +190,7 @@ class MX_Loader extends CI_Loader
 			
 		} else {
 			
-			(CI_VERSION < 2) ? load_class('Model', FALSE) : load_class('Model', 'core');
+			class_exists('CI_Model', FALSE) OR load_class('Model', 'core');
 			
 			if ($connect !== FALSE AND ! class_exists('CI_DB', FALSE)) {
 				if ($connect === TRUE) $connect = '';
