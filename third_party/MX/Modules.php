@@ -1,7 +1,12 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-/* define the module locations and offset */
-Modules::$locations = array(
+global $CFG;
+
+/* get module locations from config settings */
+Modules::$locations = $CFG->item('modules_locations');
+
+/* use the default module location and offset instead */
+is_array(Modules::$locations) OR Modules::$locations = array(
 	APPPATH.'modules/' => '../modules/',
 );
 
