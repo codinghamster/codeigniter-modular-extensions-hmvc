@@ -46,14 +46,9 @@ class MX_Router extends CI_Router
 	public function _validate_request($segments) {		
 		
 		/* locate module controller */
-		if ($located = $this->locate($segments)) return $located;
+		if ($located = $this->locate($segments)) return $located;	
 		
-		/* use a default 404 controller */
-		if (isset($this->routes['404']) AND $segments = explode('/', $this->routes['404'])) {
-			if ($located = $this->locate($segments)) return $located;
-		}	
-			
-		/* use a default 404_override controller CI 2.0 */
+		/* use a default 404_override controller */
 		if (isset($this->routes['404_override']) AND $segments = explode('/', $this->routes['404_override'])) {
 			if ($located = $this->locate($segments)) return $located;
 		}
@@ -123,14 +118,8 @@ class MX_Router extends CI_Router
 			$this->directory = $module.'/';
 			return array_slice($segments, 1);
 		}
-
-		/* application sub-directory default controller exists? */
-		if(is_file(APPPATH.'controllers/'.$module.'/'.$this->default_controller.$ext)) {
-			$this->directory = $module.'/';
-			return array($this->default_controller);
-		}
 	}
-	
+
 	public function set_class($class) {
 		$this->class = $class.$this->config->item('controller_suffix');
 	}
