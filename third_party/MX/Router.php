@@ -43,10 +43,10 @@ class MX_Router extends CI_Router
 		return $this->module;
 	}
 	
-	public function _validate_request($segments) {		
+	public function _validate_request($segments) {
 		
 		/* locate module controller */
-		if ($located = $this->locate($segments)) return $located;	
+		if ($located = $this->locate($segments)) return $located;
 		
 		/* use a default 404_override controller */
 		if (isset($this->routes['404_override']) AND $segments = explode('/', $this->routes['404_override'])) {
