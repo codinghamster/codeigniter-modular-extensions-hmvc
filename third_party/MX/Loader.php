@@ -321,6 +321,13 @@ class MX_Loader extends CI_Loader
 	
 		/* nothing to do */
 		if (count($autoload) == 0) return;
+		
+		/* autoload package paths */
+		if (isset($autoload['packages'])){
+			foreach ($autoload['packages'] as $package_path){
+				$this->add_package_path($package_path);
+			}
+		}
 				
 		/* autoload config */
 		if (isset($autoload['config'])){
