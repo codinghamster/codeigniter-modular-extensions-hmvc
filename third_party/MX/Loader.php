@@ -51,13 +51,15 @@ class MX_Loader extends CI_Loader
 	}
 	
 	/** Initialize the module **/
-	public function _init() {
+	public function _init($controller) {
 		
 		/* references to ci loader variables */
 		foreach (get_class_vars('CI_Loader') as $var => $val) {
 			if ($var != '_ci_ob_level') $this->$var =& CI::$APP->load->$var;
 		}
- 		
+		
+		/* set a reference to the module controller */
+ 		$this->controller = $controller;
  		$this->__construct();
 	}
 
@@ -264,7 +266,7 @@ class MX_Loader extends CI_Loader
 	} 
 
 	public function __get($class) {
-		return CI::$APP->$class;
+		return (isset($this->controller)) ? $this->controller->$class : CI::$APP->$class;
 	}
 
 	function _ci_load($_ci_data) {
