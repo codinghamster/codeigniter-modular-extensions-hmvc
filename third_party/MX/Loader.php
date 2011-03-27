@@ -118,16 +118,12 @@ class MX_Loader extends CI_Loader
 	}
 
 	/** Load a module language file **/
-	public function language($langfile, $lang = '', $return = FALSE)	{
-		
-		if (is_array($langfile)) return $this->languages($langfile);
-		
-		return CI::$APP->lang->load($langfile, $lang, $return, $this->_module);
+	public function language($langfile, $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '') {
+		return CI::$APP->lang->load($langfile, $idiom, $return, $add_suffix, $alt_path, $this->_module);
 	}
-
-	/** Load an array of languages **/
+	
 	public function languages($languages) {
-		foreach ($languages as $_language) $this->language($_language);	
+		foreach($languages as $_language) $this->language($language);
 	}
 	
 	/** Load a module library **/
@@ -341,7 +337,7 @@ class MX_Loader extends CI_Loader
 		/* autoload helpers, plugins, languages */
 		foreach (array('helper', 'plugin', 'language') as $type){
 			if (isset($autoload[$type])){
-				foreach ($autoload[$type] as $item){
+				foreach ($autoload[$type] as $k => $item){
 					$this->$type($item);
 				}
 			}
