@@ -78,7 +78,7 @@ class MX_Loader extends CI_Loader
 	}	
 	
 	/** Load a module config file **/
-	public function config($file = '', $use_sections = FALSE, $fail_gracefully = FALSE) {
+	public function config($file = 'config', $use_sections = FALSE, $fail_gracefully = FALSE) {
 		return CI::$APP->config->load($file, $use_sections, $fail_gracefully, $this->_module);
 	}
 
@@ -329,15 +329,15 @@ class MX_Loader extends CI_Loader
 				
 		/* autoload config */
 		if (isset($autoload['config'])){
-			foreach ($autoload['config'] as $key => $val){
-				$this->config($val);
+			foreach ($autoload['config'] as $config){
+				$this->config($config);
 			}
 		}
 
 		/* autoload helpers, plugins, languages */
 		foreach (array('helper', 'plugin', 'language') as $type){
 			if (isset($autoload[$type])){
-				foreach ($autoload[$type] as $k => $item){
+				foreach ($autoload[$type] as $item){
 					$this->$type($item);
 				}
 			}
