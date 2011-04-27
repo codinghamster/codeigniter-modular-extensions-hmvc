@@ -37,8 +37,8 @@ class MX_Loader extends CI_Loader
 {
 	private $_module;
 	
-	public $_ci_plugins;
-	public $_ci_cached_vars;
+	public $_ci_plugins = array();
+	public $_ci_cached_vars = array();
 	
 	public function __construct() {
 		
