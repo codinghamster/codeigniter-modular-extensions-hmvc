@@ -49,8 +49,8 @@ class CI extends CI_Controller
 		parent::__construct();
 		
 		/* re-assign language and config for modules */
-		if ( ! is_a($this->lang, 'MX_Lang')) $this->lang = new MX_Lang;
-		if ( ! is_a($this->config, 'MX_Config')) $this->config = new MX_Config;
+		if ( ! is_a(self::$APP->lang, 'MX_Lang')) self::$APP->lang = new MX_Lang;
+		if ( ! is_a(self::$APP->config, 'MX_Config')) self::$APP->config = new MX_Config;
 	}
 }
 
