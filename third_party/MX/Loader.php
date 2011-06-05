@@ -263,7 +263,7 @@ class MX_Loader extends CI_Loader
 	} 
 
 	public function __get($class) {
-		return (isset($this->controller)) ? $this->controller->$class : CI::$APP->$class;
+		return (isset($this->controller->$class)) ? $this->controller->$class : CI::$APP->$class;
 	}
 
 	public function _ci_load($_ci_data) {
