@@ -219,7 +219,7 @@ class Modules
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);
 				}
 
-				return array($module, $val);
+				return explode('/', $module.'/'.$val);
 			}
 		}
 	}
