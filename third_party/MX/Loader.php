@@ -311,44 +311,54 @@ class MX_Loader extends CI_Loader
 		
 		$path = FALSE;
 		
-		if ($this->_module)
+		if ($this->_module) {
+			
+			list($path, $file) = Modules::find('constants', $this->_module, 'config/');	
+			
+			/* module constants file */
+			if ($path != FALSE) {
+				include $path.$file.EXT;
+			}
+					
 			list($path, $file) = Modules::find('autoload', $this->_module, 'config/');
-
-		/* module autoload file */
-		if ($path != FALSE)
-			$autoload = array_merge(Modules::load_file($file, $path, 'autoload'), $autoload);
-	
+		
+			/* module autoload file */
+			if ($path != FALSE) {
+				$autoload = array_merge(Modules::load_file($file, $path, 'autoload'), $autoload);
+			}
+		}
+		
 		/* nothing to do */
 		if (count($autoload) == 0) return;
 		
 		/* autoload package paths */
-		if (isset($autoload['packages'])){
-			foreach ($autoload['packages'] as $package_path){
+		if (isset($autoload['packages'])) {
+			foreach ($autoload['packages'] as $package_path) {
 				$this->add_package_path($package_path);
 			}
 		}
 				
 		/* autoload config */
-		if (isset($autoload['config'])){
-			foreach ($autoload['config'] as $config){
+		if (isset($autoload['config'])) {
+			foreach ($autoload['config'] as $config) {
 				$this->config($config);
 			}
 		}
 
 		/* autoload helpers, plugins, languages */
-		foreach (array('helper', 'plugin', 'language') as $type){
+		foreach (array('helper', 'plugin', 'language') as $type) {
 			if (isset($autoload[$type])){
-				foreach ($autoload[$type] as $item){
+				foreach ($autoload[$type] as $item) {
 					$this->$type($item);
 				}
 			}
 		}	
 			
 		/* autoload database & libraries */
-		if (isset($autoload['libraries'])){
-			if (in_array('database', $autoload['libraries'])){
+		if (isset($autoload['libraries'])) {
+			if (in_array('database', $autoload['libraries'])) {
 				/* autoload database */
-				if ( ! $db = CI::$APP->config->item('database')){
+				if ( ! $db = CI::$APP->config->item('database')) {
 					$db['params'] = 'default';
 					$db['active_record'] = TRUE;
 				}
@@ -357,20 +367,20 @@ class MX_Loader extends CI_Loader
 			}
 
 			/* autoload libraries */
-			foreach ($autoload['libraries'] as $library){
+			foreach ($autoload['libraries'] as $library) {
 				$this->library($library);
 			}
 		}
 		
 		/* autoload models */
-		if (isset($autoload['model'])){
-			foreach ($autoload['model'] as $model => $alias){
+		if (isset($autoload['model'])) {
+			foreach ($autoload['model'] as $model => $alias) {
 				(is_numeric($model)) ? $this->model($alias) : $this->model($model, $alias);
 			}
 		}
 		
 		/* autoload module controllers */
-		if (isset($autoload['modules'])){
+		if (isset($autoload['modules'])) {
 			foreach ($autoload['modules'] as $controller) {
 				($controller != $this->_module) AND $this->module($controller);
 			}
