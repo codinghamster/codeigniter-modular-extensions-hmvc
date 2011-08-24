@@ -1,5 +1,7 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
+(defined('EXT')) OR define('EXT', '.php');
+
 global $CFG;
 
 /* get module locations from config settings or use the default module location and offset */
