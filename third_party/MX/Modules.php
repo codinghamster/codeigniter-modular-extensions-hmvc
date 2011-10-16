@@ -196,6 +196,7 @@ class Modules
 			show_error("Unable to locate the {$base} file: {$path}{$file_ext}");
 		}
 
+		log_message('debug', "Unable to locate the {$base} file: {$path}{$file_ext}");
 		return array(FALSE, $file);	
 	}
 	
