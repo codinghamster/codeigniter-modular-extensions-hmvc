@@ -183,10 +183,10 @@ class Modules
 			foreach($modules as $module => $subpath) {			
 				$fullpath = $location.$module.'/'.$base.$subpath;
 				
-				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
-				
 				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) 
 					return array($fullpath, ucfirst($file));
+					
+				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
 			}
 		}
 		
