@@ -132,8 +132,8 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($library)) return $this->libraries($library);		
 		
-		$class = strtolower(end(explode('/', $library)));
-		
+		$class = strtolower(substr($library, strrpos('/', $library)));
+
 		if (isset($this->_ci_classes[$class]) AND $_alias = $this->_ci_classes[$class])
 			return CI::$APP->$_alias;
 			
@@ -175,7 +175,7 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($model)) return $this->models($model);
 
-		($_alias = $object_name) OR $_alias = end(explode('/', $model));
+		($_alias = $object_name) OR $_alias = substr($model, strrpos('/', $model));
 
 		if (in_array($_alias, $this->_ci_models, TRUE)) 
 			return CI::$APP->$_alias;
@@ -218,7 +218,7 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($module)) return $this->modules($module);
 
-		$_alias = strtolower(end(explode('/', $module)));
+		$_alias = strtolower(substr($module, strrpos('/', $module)));
 		CI::$APP->$_alias = Modules::load(array($module => $params));
 		return CI::$APP->$_alias;
 	}
@@ -276,7 +276,7 @@ class MX_Loader extends CI_Loader
 			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
 			$_ci_path = $this->_ci_view_path.$_ci_file;
 		} else {
-			$_ci_file = end(explode('/', $_ci_path));
+			$_ci_file = substr($_ci_path, strrpos('/', $_ci_path));
 		}
 
 		if ( ! file_exists($_ci_path)) 
