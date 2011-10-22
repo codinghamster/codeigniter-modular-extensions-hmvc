@@ -132,7 +132,7 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($library)) return $this->libraries($library);		
 		
-		$class = strtolower(array_pop(explode('/', $library)));
+		$class = strtolower(basename($library));
 
 		if (isset($this->_ci_classes[$class]) AND $_alias = $this->_ci_classes[$class])
 			return CI::$APP->$_alias;
@@ -175,7 +175,7 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($model)) return $this->models($model);
 
-		($_alias = $object_name) OR $_alias = array_pop(explode('/', $model));
+		($_alias = $object_name) OR $_alias = basename($model);
 
 		if (in_array($_alias, $this->_ci_models, TRUE)) 
 			return CI::$APP->$_alias;
@@ -218,7 +218,7 @@ class MX_Loader extends CI_Loader
 		
 		if (is_array($module)) return $this->modules($module);
 
-		$_alias = strtolower(array_pop(explode('/', $module)));
+		$_alias = strtolower(basename($module));
 		CI::$APP->$_alias = Modules::load(array($module => $params));
 		return CI::$APP->$_alias;
 	}
@@ -276,7 +276,7 @@ class MX_Loader extends CI_Loader
 			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
 			$_ci_path = $this->_ci_view_path.$_ci_file;
 		} else {
-			$_ci_file = array_pop(explode('/', $_ci_path));
+			$_ci_file = basename($_ci_path);
 		}
 
 		if ( ! file_exists($_ci_path)) 
