@@ -190,13 +190,6 @@ class Modules
 			}
 		}
 		
-		/* is the file in an application directory? */
-		if ($base == 'views/' OR $base == 'plugins/') {
-			if (is_file(APPPATH.$base.$path.$file_ext)) return array(APPPATH.$base.$path, $file);	
-			show_error("Unable to locate the {$base} file: {$path}{$file_ext}");
-		}
-
-		log_message('debug', "Unable to locate the {$base} file: {$path}{$file_ext}");
 		return array(FALSE, $file);	
 	}
 	

@@ -238,7 +238,9 @@ class MX_Loader extends CI_Loader
 
 		list($path, $_plugin) = Modules::find($plugin.'_pi', $this->_module, 'plugins/');	
 		
-		if ($path === FALSE) return;
+		if ($path === FALSE AND ! is_file($_plugin = APPPATH.'plugins/'.$_plugin.EXT)) {	
+			show_error("Unable to locate the plugin file: {$_plugin}");
+		}
 
 		Modules::load_file($_plugin, $path);
 		$this->_ci_plugins[$plugin] = TRUE;
@@ -252,7 +254,7 @@ class MX_Loader extends CI_Loader
 	/** Load a module view **/
 	public function view($view, $vars = array(), $return = FALSE) {
 		list($path, $view) = Modules::find($view, $this->_module, 'views/');
-		$this->_ci_view_path = $path;
+		$this->_ci_view_paths = array($path => TRUE) + $this->_ci_view_paths;
 		return $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
 	}
 
@@ -273,14 +275,21 @@ class MX_Loader extends CI_Loader
 		}
 
 		if ($_ci_path == '') {
+			
 			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
-			$_ci_path = $this->_ci_view_path.$_ci_file;
-		} else {
-			$_ci_file = basename($_ci_path);
+			
+			foreach ($this->_ci_view_paths as $path => $cascade) {
+				if (file_exists($view = $path.$_ci_file)) {
+					$_ci_path = $view;
+					break;
+				}
+				
+				if ( ! $cascade) break;
+			}
 		}
 
-		if ( ! file_exists($_ci_path)) 
-			show_error('Unable to load the requested file: '.$_ci_file);
+		if ($_ci_path == '') 
+			show_error('Unable to load the requested view file: '.basename($_ci_path));
 
 		if (is_array($_ci_vars)) 
 			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
