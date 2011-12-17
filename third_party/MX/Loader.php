@@ -291,7 +291,8 @@ class MX_Loader extends CI_Loader
 				if ( ! $cascade) break;
 			}
 			
-		} else {
+		} elseif (isset($_ci_path)) {
+			
 			$_ci_file = basename($_ci_path);
 			if( ! file_exists($_ci_path)) $_ci_path = '';
 		}
