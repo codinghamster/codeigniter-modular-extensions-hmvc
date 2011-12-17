@@ -275,15 +275,14 @@ class MX_Loader extends CI_Loader
 
 	public function _ci_load($_ci_data) {
 		
-		foreach (array('_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val) {
-			$$_ci_val = ( ! isset($_ci_data[$_ci_val])) ? FALSE : $_ci_data[$_ci_val];
-		}
-
-		if ($_ci_path == '') {
+		extract($_ci_data);
+		
+		if (isset($_ci_view)) {
 			
+			$_ci_path = '';
 			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
 			
-			foreach ($this->_ci_view_paths as $path => $cascade) {
+			foreach ($this->_ci_view_paths as $path => $cascade) {				
 				if (file_exists($view = $path.$_ci_file)) {
 					$_ci_path = $view;
 					break;
@@ -291,13 +290,17 @@ class MX_Loader extends CI_Loader
 				
 				if ( ! $cascade) break;
 			}
+			
+		} else {
+			$_ci_file = basename($_ci_path);
+			if( ! file_exists($_ci_path)) $_ci_path = '';
 		}
 
-		if ($_ci_path == '') 
+		if (empty($_ci_path)) 
 			show_error('Unable to load the requested file: '.$_ci_file);
 
-		if (is_array($_ci_vars)) 
-			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
+		if (isset($_ci_vars)) 
+			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, (array) $_ci_vars);
 		
 		extract($this->_ci_cached_vars);
 
