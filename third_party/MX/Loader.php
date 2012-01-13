@@ -124,7 +124,7 @@ class MX_Loader extends CI_Loader
 	}
 	
 	public function languages($languages) {
-		foreach($languages as $_language) $this->language($language);
+		foreach($languages as $_language) $this->language($_language);
 	}
 	
 	/** Load a module library **/
