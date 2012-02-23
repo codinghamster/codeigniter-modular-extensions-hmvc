@@ -40,28 +40,30 @@ class MX_Loader extends CI_Loader
 	public $_ci_plugins = array();
 	public $_ci_cached_vars = array();
 	
-	public function __construct() {
+	/** Initialize the loader variables **/
+	public function initialize($controller = NULL) {
 		
-		parent::__construct();
+		if (is_a($controller, 'MX_Controller')) {	
+			
+			/* reference to the module controller */
+			$this->controller = $controller;
+			
+			/* references to ci loader variables */
+			foreach (get_class_vars('CI_Loader') as $var => $val) {
+				if ($var != '_ci_ob_level') {
+					$this->$var =& CI::$APP->load->$var;
+				}
+			}
+			
+		} else {
+			parent::initialize();
+		}
 		
 		/* set the module name */
 		$this->_module = CI::$APP->router->fetch_module();
 		
 		/* add this module path to the loader variables */
 		$this->_add_module_paths($this->_module);
-	}
-	
-	/** Initialize the module **/
-	public function _init($controller) {
-		
-		/* references to ci loader variables */
-		foreach (get_class_vars('CI_Loader') as $var => $val) {
-			if ($var != '_ci_ob_level') $this->$var =& CI::$APP->load->$var;
-		}
-		
-		/* set a reference to the module controller */
- 		$this->controller = $controller;
- 		$this->__construct();
 	}
 
 	/** Add a module path loader variables **/
