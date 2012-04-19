@@ -283,7 +283,9 @@ class MX_Loader extends CI_Loader
 		if (isset($_ci_view)) {
 			
 			$_ci_path = '';
-			$_ci_file = strpos($_ci_view, '.') ? $_ci_view : $_ci_view.EXT;
+			
+			/* add file extension if not provided */
+			$_ci_file = (pathinfo($_ci_view, PATHINFO_EXTENSION)) ? $_ci_view : $_ci_view.EXT;
 			
 			foreach ($this->_ci_view_paths as $path => $cascade) {				
 				if (file_exists($view = $path.$_ci_file)) {
