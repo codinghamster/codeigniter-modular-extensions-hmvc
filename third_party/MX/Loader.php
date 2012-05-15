@@ -189,7 +189,7 @@ class MX_Loader extends CI_Loader
 		if ($path == FALSE) {
 			
 			/* check application & packages */
-			parent::model($model, $object_name);
+			parent::model($model, $object_name, $connect);
 			
 		} else {
 			
