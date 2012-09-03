@@ -53,9 +53,6 @@ class CI
 		
 		/* assign the core loader */
 		self::$APP->load = new MX_Loader;
-		
-		/* autoload module items */
-		self::$APP->load->_autoloader(array());
 	}
 }
 
