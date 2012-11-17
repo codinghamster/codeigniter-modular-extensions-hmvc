@@ -1,5 +1,5 @@
 ### Support development of Modular Extensions - HMVC
-[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FK79XNCUE9P5C|{{https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif | Support development}}]]
+[![Support development](https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif "Support Development")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FK79XNCUE9P5C)
 
 
 # Modular Extensions - HMVC
@@ -10,7 +10,7 @@ HMVC stands for Hierarchical Model View Controller.
 
 Module Controllers can be used as normal Controllers or HMVC Controllers and they can be used to help you build view partials.
 
-## Features:
+### Features:
 
 All controllers can contain an $autoload class variable, which holds an array of items to load prior to running the constructor. This can be used together with module/config/autoload.php, however using the $autoload variable only works for that specific controller.
 
@@ -31,7 +31,7 @@ All module controllers are accessible from the URL via module/controller/method 
 If you add the _remap() method to your controllers you can prevent unwanted access to them from the URL and redirect or flag an error as you like.
 
 
-## Notes:
+### Notes:
 
 To use HMVC functionality, such as Modules::run(), controllers must extend the MX_Controller class.
 
@@ -103,7 +103,7 @@ When using form validation with MX you will need to extend the CI_Form_validatio
 		}
 	}
 
-##View Partials
+### View Partials
 
 Using a Module as a view partial from within a view is as easy as writing:
 
@@ -112,7 +112,7 @@ Using a Module as a view partial from within a view is as easy as writing:
 
 Parameters are optional, You may pass any number of parameters.
 
-##Modular Extensions installation
+### Modular Extensions installation
 
 1) Start with a clean CI install.
 
@@ -140,7 +140,7 @@ Parameters are optional, You may pass any number of parameters.
 
 You should now have a running Modular Extensions installation.
 
-###Installation Guide Hints:
+### Installation Guide Hints:
 -Steps 1-3 tell you how to get a standard CI install working - if you have a clean/tested CI install, skip to step 4.
 
 -Steps 4-5 show that normal CI still works after installing MX - it shouldn’t interfere with the normal CI setup.
@@ -150,7 +150,7 @@ You should now have a running Modular Extensions installation.
 -Steps 9-11 show MX working with both controller and view in the “welcome” module - there should be no files in the application/controllers or application/views directories.
 
 
-##FAQ
+### FAQ
 
 Q. What are modules, why should I use them?
 
