@@ -1,6 +1,5 @@
 ### Support development of Modular Extensions - HMVC
-[![Support development](https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif "Support Development")]
-(https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FK79XNCUE9P5C)
+[![Support development](https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif "Support Development")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FK79XNCUE9P5C)
 
 
 # Modular Extensions - HMVC
