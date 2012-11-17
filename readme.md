@@ -105,20 +105,17 @@ class MY_Form_validation extends CI_Form_validation
     public $CI;
 }
 }}}
-{{{
-#!php
-<?php
-class Xyz extends MX_Controller 
-{
-    function __construct()
-    {
-        parent::__construct();
-        
-        $this->load->library('form_validation');
-        $this->form_validation->CI =& $this;
-    }
-}
-}}}
+
+	class Xyz extends MX_Controller 
+	{
+		function __construct()
+		{
+			parent::__construct();
+
+			$this->load->library('form_validation');
+			$this->form_validation->CI =& $this;
+		}
+	}
 
 ==View Partials==
 
