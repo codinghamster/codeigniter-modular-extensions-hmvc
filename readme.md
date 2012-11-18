@@ -4,20 +4,28 @@
 
 # Modular Extensions - HMVC
 
-Modular Extensions makes the CodeIgniter PHP framework modular. Modules are groups of independent 
-components, typically model, controller and view, arranged in an application modules sub-directory, 
+Modular Extensions makes the CodeIgniter PHP framework modular. Modules are groups of independent components, 
+typically model, controller and view, arranged in an application modules sub-directory, 
 that can be dropped into other CodeIgniter applications.
 
 HMVC stands for Hierarchical Model View Controller.
 
-Module Controllers can be used as normal Controllers or HMVC Controllers and they can be used to help 
-you build view partials.
+Module Controllers can be used as normal Controllers or HMVC Controllers and they can be used as widgets to 
+help you build view partials.
 
 ### Features:
 
-All controllers can contain an $autoload class variable, which holds an array of items to load prior 
-to running the constructor. This can be used together with module/config/autoload.php, however using 
-the $autoload variable only works for that specific controller.
+All controllers can contain an $autoload class variable, which holds an array of items to load prior to running the constructor. 
+This can be used together with module/config/autoload.php, however using the $autoload variable only works for that specific controller.
+    
+    :::php    
+	class Xyz extends MX_Controller 
+	{
+		$autoload = array(
+			'helpers'   => array('url', 'form'),
+			'libraries' => array('email'),
+		);
+	}
 
 The Modules::$locations array may be set in the application/config.php file. ie:
 
