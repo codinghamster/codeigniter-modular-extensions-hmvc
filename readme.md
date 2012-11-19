@@ -15,8 +15,8 @@ Module Controllers can be used as normal Controllers or HMVC Controllers and the
 
 All controllers can contain an $autoload class variable, which holds an array of items to load prior to running the constructor. 
 This can be used together with module/config/autoload.php, however using the $autoload variable only works for that specific controller.
-:::php
-<?php     
+    :::php
+    <?php     
 	class Xyz extends MX_Controller 
 	{
 		$autoload = array(
@@ -24,14 +24,15 @@ This can be used together with module/config/autoload.php, however using the $au
 			'libraries' => array('email'),
 		);
 	}
-:::
+    :::
 The Modules::$locations array may be set in the application/config.php file. ie:
-:::php
-<?php
+
+    :::php
+    <?php
     $config['modules_locations'] = array(
         APPPATH.'modules/' => '../modules/',
     );
-::: 
+    ::: 
 Modules::run() output is buffered, so any data returned or output directly from the controller is caught and 
 returned to the caller. In particular, $this->load->view() can be used as you would in a normal controller, without the need for return.
 
@@ -50,8 +51,8 @@ To use HMVC functionality, such as Modules::run(), controllers must extend the M
 To use Modular Separation only, without HMVC, controllers will extend the CodeIgniter Controller class.
 
 You must use PHP5 style constructors in your controllers. ie:
-:::php
-<?php
+    :::php
+    <?php
 	class Xyz extends MX_Controller 
 	{
 		function __construct()
@@ -59,16 +60,16 @@ You must use PHP5 style constructors in your controllers. ie:
 			parent::__construct();
 		}
 	}
-:::
+	:::
 Constructors are not required unless you need to load or process something when the controller is first created.
 
 All  MY_ extension libraries should include (require) their equivalent MX library file and extend their equivalent MX_ class
 
 Each module may contain a config/routes.php file where routing and a default controller can be defined for that module using: 
-:::php
-<?php
+	:::php
+	<?php
     $route['module_name'] = 'controller_name';
-:::
+	:::
 Controllers may be loaded from application/controllers sub-directories.
 
 Controllers may also be loaded from module/controllers sub-directories.
@@ -76,8 +77,8 @@ Controllers may also be loaded from module/controllers sub-directories.
 Resources may be cross loaded between modules. ie: $this->load->model('module/model');
 
 Modules::run() is designed for returning view partials, and it will return buffered output (a view) from a controller. The syntax for using modules::run is a URI style segmented string and unlimited variables.
-:::php
-<?php
+	:::php
+	<?php
 	/** module and controller names are different, you must include the method name also, including 'index' **/
 	modules::run('module/controller/method', $params, $...);
 
@@ -88,7 +89,7 @@ Modules::run() is designed for returning view partials, and it will return buffe
 	modules::run('module', $params, $...);
 
 	/** Parameters are optional, You may pass any number of parameters. **/
-:::
+	:::
 To call a module controller from within a controller you can use $this->load->module() or Modules::load() 
 and PHP5 method chaining is available for any object loaded by MX. 
 ie: $this->load->library(‘validation’)->run().
@@ -111,17 +112,17 @@ Models and libraries can also be loaded from sub-directories in their respective
 When using form validation with MX you will need to extend the CI_Form_validation class as shown below, 
 before assigning the current controller as the $CI variable to the form_validation library. 
 This will allow your callback methods to function properly. (This has been discussed on the CI forums also). ie:
-:::php
-<?php
+	:::php
+	<?php
 	/** application/libraries/MY_Form_validation **/ 
 	class MY_Form_validation extends CI_Form_validation 
 	{
 		public $CI;
 	}
-:::
+	:::
 
-:::php
-<?php
+	:::php
+	<?php
 	class Xyz extends MX_Controller 
 	{
 		function __construct()
@@ -132,13 +133,14 @@ This will allow your callback methods to function properly. (This has been discu
 			$this->form_validation->CI =& $this;
 		}
 	}
-:::
+	:::
 ### View Partials
 
 Using a Module as a view partial from within a view is as easy as writing:
 
+	:::php
 	<?php echo Modules::run('module/controller/method', $param, $...); ?> 
-
+	:::
 
 Parameters are optional, You may pass any number of parameters.
 
