@@ -114,9 +114,7 @@ $config = $this->load->config(‘config_file’),  Returns the loaded config arr
 Models and libraries can also be loaded from sub-directories in their respective application directories.
 
 When using form validation with MX you will need to extend the CI_Form_validation class as shown below, 
-before assigning the current controller as the $CI variable to the form_validation library. 
-This will allow your callback methods to function properly. (This has been discussed on the CI forums also). ie:
-	
+
 	:::php
 	<?php
 	/** application/libraries/MY_Form_validation **/ 
@@ -124,8 +122,10 @@ This will allow your callback methods to function properly. (This has been discu
 	{
 		public $CI;
 	}
-	:::
 
+before assigning the current controller as the $CI variable to the form_validation library. 
+This will allow your callback methods to function properly. (This has been discussed on the CI forums also).
+	
 	:::php
 	<?php
 	class Xyz extends MX_Controller 
