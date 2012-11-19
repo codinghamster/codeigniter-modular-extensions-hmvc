@@ -15,7 +15,8 @@ Module Controllers can be used as normal Controllers or HMVC Controllers and the
 
 All controllers can contain an $autoload class variable, which holds an array of items to load prior to running the constructor. 
 This can be used together with module/config/autoload.php, however using the $autoload variable only works for that specific controller.
-    :::php
+    
+	:::php
     <?php     
 	class Xyz extends MX_Controller 
 	{
@@ -51,6 +52,7 @@ To use HMVC functionality, such as Modules::run(), controllers must extend the M
 To use Modular Separation only, without HMVC, controllers will extend the CodeIgniter Controller class.
 
 You must use PHP5 style constructors in your controllers. ie:
+
     :::php
     <?php
 	class Xyz extends MX_Controller 
@@ -66,6 +68,7 @@ Constructors are not required unless you need to load or process something when 
 All  MY_ extension libraries should include (require) their equivalent MX library file and extend their equivalent MX_ class
 
 Each module may contain a config/routes.php file where routing and a default controller can be defined for that module using: 
+	
 	:::php
 	<?php
     $route['module_name'] = 'controller_name';
@@ -77,6 +80,7 @@ Controllers may also be loaded from module/controllers sub-directories.
 Resources may be cross loaded between modules. ie: $this->load->model('module/model');
 
 Modules::run() is designed for returning view partials, and it will return buffered output (a view) from a controller. The syntax for using modules::run is a URI style segmented string and unlimited variables.
+	
 	:::php
 	<?php
 	/** module and controller names are different, you must include the method name also, including 'index' **/
@@ -112,6 +116,7 @@ Models and libraries can also be loaded from sub-directories in their respective
 When using form validation with MX you will need to extend the CI_Form_validation class as shown below, 
 before assigning the current controller as the $CI variable to the form_validation library. 
 This will allow your callback methods to function properly. (This has been discussed on the CI forums also). ie:
+	
 	:::php
 	<?php
 	/** application/libraries/MY_Form_validation **/ 
