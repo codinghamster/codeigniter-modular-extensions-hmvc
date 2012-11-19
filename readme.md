@@ -25,7 +25,7 @@ This can be used together with module/config/autoload.php, however using the $au
 			'libraries' => array('email'),
 		);
 	}
-    :::
+
 The Modules::$locations array may be set in the application/config.php file. ie:
 
     :::php
@@ -33,7 +33,7 @@ The Modules::$locations array may be set in the application/config.php file. ie:
     $config['modules_locations'] = array(
         APPPATH.'modules/' => '../modules/',
     );
-    ::: 
+
 Modules::run() output is buffered, so any data returned or output directly from the controller is caught and 
 returned to the caller. In particular, $this->load->view() can be used as you would in a normal controller, without the need for return.
 
@@ -62,7 +62,7 @@ You must use PHP5 style constructors in your controllers. ie:
 			parent::__construct();
 		}
 	}
-	:::
+
 Constructors are not required unless you need to load or process something when the controller is first created.
 
 All  MY_ extension libraries should include (require) their equivalent MX library file and extend their equivalent MX_ class
@@ -72,7 +72,7 @@ Each module may contain a config/routes.php file where routing and a default con
 	:::php
 	<?php
     $route['module_name'] = 'controller_name';
-	:::
+
 Controllers may be loaded from application/controllers sub-directories.
 
 Controllers may also be loaded from module/controllers sub-directories.
@@ -93,7 +93,7 @@ Modules::run() is designed for returning view partials, and it will return buffe
 	modules::run('module', $params, $...);
 
 	/** Parameters are optional, You may pass any number of parameters. **/
-	:::
+
 To call a module controller from within a controller you can use $this->load->module() or Modules::load() 
 and PHP5 method chaining is available for any object loaded by MX. 
 ie: $this->load->library(‘validation’)->run().
@@ -138,14 +138,13 @@ This will allow your callback methods to function properly. (This has been discu
 			$this->form_validation->CI =& $this;
 		}
 	}
-	:::
+
 ### View Partials
 
 Using a Module as a view partial from within a view is as easy as writing:
 
 	:::php
 	<?php echo Modules::run('module/controller/method', $param, $...); ?> 
-	:::
 
 Parameters are optional, You may pass any number of parameters.
 
