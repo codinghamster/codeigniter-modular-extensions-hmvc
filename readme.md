@@ -21,7 +21,7 @@ This can be used together with module/config/autoload.php, however using the $au
 	class Xyz extends MX_Controller 
 	{
 		$autoload = array(
-			'helpers'   => array('url', 'form'),
+			'helper'    => array('url', 'form'),
 			'libraries' => array('email'),
 		);
 	}
