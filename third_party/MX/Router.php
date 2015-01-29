@@ -65,7 +65,7 @@ class MX_Router extends CI_Router
 	
 	public function _set_default_controller()
 	{ 	
-		if ( ! empty($this->default_controller))
+		if (empty($this->directory))
 		{ 
 			/* set the default controller module path */
 			$this->_set_module_path($this->default_controller);
@@ -158,9 +158,9 @@ class MX_Router extends CI_Router
 		{
 			// Are module/controller/method segments being specified?
 			$sgs = sscanf($_route, '%[^/]/%[^/]/%s', $module, $class, $method);
-			
+		
 			// set the module/controller directory location if found
-			if ($this->locate(array($module, $this->directory, $class)))
+			if ($this->locate(array($module, $class)))
 			{
 				//reset to class/method 
 				switch ($sgs)
