@@ -24,8 +24,8 @@ spl_autoload_register('Modules::autoload');
  *
  * Install this file as application/third_party/MX/Modules.php
  *
- * @copyright	Copyright (c) 2011 Wiredesignz
- * @version 	5.4
+ * @copyright	Copyright (c) 2015 Wiredesignz
+ * @version 	5.5
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
