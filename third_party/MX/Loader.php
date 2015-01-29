@@ -46,7 +46,7 @@ class MX_Loader extends CI_Loader
 		/* set the module name */
 		$this->_module = CI::$APP->router->module;
 		
-		if (is_a($controller, 'MX_Controller')) 
+		if ($controller instanceof MX_Controller) 
 		{
 			/* reference to the module controller */
 			$this->controller = $controller;
@@ -88,7 +88,7 @@ class MX_Loader extends CI_Loader
 	}	
 	
 	/** Load a module config file **/
-	public function config($file = 'config', $use_sections = FALSE, $fail_gracefully = FALSE) 
+	public function config($file, $use_sections = FALSE, $fail_gracefully = FALSE) 
 	{
 		return CI::$APP->config->load($file, $use_sections, $fail_gracefully, $this->_module);
 	}
@@ -121,31 +121,31 @@ class MX_Loader extends CI_Loader
 
 		Modules::load_file($_helper, $path);
 		$this->_ci_helpers[$_helper] = TRUE;
-        return $this;
+		return $this;
 	}
 
 	/** Load an array of helpers **/
 	public function helpers($helpers = array()) 
 	{
 		foreach ($helpers as $_helper) $this->helper($_helper);	
-        return $this;
+		return $this;
 	}
 
 	/** Load a module language file **/
-	public function language($langfile = array(), $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '') 
+	public function language($langfile, $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '') 
 	{
 		CI::$APP->lang->load($langfile, $idiom, $return, $add_suffix, $alt_path, $this->_module);
-        return $this;
+		return $this;
 	}
 	
 	public function languages($languages) 
 	{
 		foreach($languages as $_language) $this->language($_language);
-        return $this;
+		return $this;
 	}
 	
 	/** Load a module library **/
-	public function library($library = '', $params = NULL, $object_name = NULL) 
+	public function library($library, $params = NULL, $object_name = NULL) 
 	{
 		if (is_array($library)) return $this->libraries($library);		
 		
@@ -187,7 +187,7 @@ class MX_Loader extends CI_Loader
 	public function libraries($libraries) 
 	{
 		foreach ($libraries as $_library) $this->library($_library);
-        return $this;
+		return $this;
 	}
 
 	/** Load a module model **/
@@ -232,7 +232,7 @@ class MX_Loader extends CI_Loader
 	public function models($models) 
 	{
 		foreach ($models as $_model) $this->model($_model);	
-        return $this;
+		return $this;
 	}
 
 	/** Load a module controller **/
@@ -249,7 +249,7 @@ class MX_Loader extends CI_Loader
 	public function modules($modules) 
 	{
 		foreach ($modules as $_module) $this->module($_module);
-        return $this;	
+		return $this;	
 	}
 
 	/** Load a module plugin **/
@@ -269,14 +269,14 @@ class MX_Loader extends CI_Loader
 
 		Modules::load_file($_plugin, $path);
 		$this->_ci_plugins[$plugin] = TRUE;
-        return $this;
+		return $this;
 	}
 
 	/** Load an array of plugins **/
 	public function plugins($plugins) 
 	{
 		foreach ($plugins as $_plugin) $this->plugin($_plugin);
-        return $this;	
+		return $this;	
 	}
 
 	/** Load a module view **/
