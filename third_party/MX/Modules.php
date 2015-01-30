@@ -193,7 +193,7 @@ class Modules
 			{			
 				$fullpath = $location.$module.'/'.$base.$subpath;
 				
-				if ($base == 'libraries/' AND is_file($fullpath.ucfirst($file_ext))) 
+				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) 
 					return array($fullpath, ucfirst($file));
 					
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
@@ -209,7 +209,7 @@ class Modules
 		/* load the route file */
 		if ( ! isset(self::$routes[$module])) 
 		{
-			if (list($path) = self::find('routes', $module, 'config/') AND $path)
+			if (list($path) = self::find('routes', $module, 'config/') && $path)
 				self::$routes[$module] = self::load_file('routes', $path, 'route');
 		}
 
