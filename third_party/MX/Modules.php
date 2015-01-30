@@ -209,8 +209,10 @@ class Modules
 		/* load the route file */
 		if ( ! isset(self::$routes[$module])) 
 		{
-			if (list($path) = self::find('routes', $module, 'config/') && isset($path))
-				self::$routes[$module] = self::load_file('routes', $path, 'route');
+			if (list($path) = self::find('routes', $module, 'config/'))
+			{
+				$path && self::$routes[$module] = self::load_file('routes', $path, 'route');
+			}
 		}
 
 		if ( ! isset(self::$routes[$module])) return;
