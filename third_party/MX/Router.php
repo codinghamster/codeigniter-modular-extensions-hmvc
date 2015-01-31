@@ -106,7 +106,7 @@ class MX_Router extends CI_Router
 				/* module sub-directory exists? */
 				if($directory && is_dir($source.$directory.'/')) 
 				{
-					$source = $source.$directory.'/'; 
+					$source .= $directory.'/'; 
 					$this->directory .= $directory.'/';
 
 					/* module sub-directory controller exists? */
