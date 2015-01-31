@@ -94,16 +94,19 @@ class MX_Loader extends CI_Loader
 	}
 
 	/** Load the database drivers **/
-	public function database($params = '', $return = FALSE, $active_record = NULL) 
+	public function database($params = '', $return = FALSE, $query_builder = NULL) 
 	{
-		if (class_exists('CI_DB', FALSE) && $return == FALSE && $active_record == NULL && isset(CI::$APP->db) && is_object(CI::$APP->db)) 
-			return;
+		if ($return === FALSE && $query_builder === NULL && 
+			isset(CI::$APP->db) && is_object(CI::$APP->db) && ! empty(CI::$APP->db->conn_id))
+		{
+			return FALSE;
+		}
 
 		require_once BASEPATH.'database/DB'.EXT;
 
-		if ($return === TRUE) return DB($params, $active_record);
+		if ($return === TRUE) return DB($params, $query_builder);
 			
-		CI::$APP->db = DB($params, $active_record);
+		CI::$APP->db = DB($params, $query_builder);
 		
 		return $this;
 	}
@@ -429,11 +432,10 @@ class MX_Loader extends CI_Loader
 				/* autoload database */
 				if ( ! $db = CI::$APP->config->item('database')) 
 				{
-					$db['params'] = 'default';
-					$db['active_record'] = TRUE;
+
+					$this->database();
+					$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
 				}
-				$this->database($db['params'], FALSE, $db['active_record']);
-				$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
 			}
 
 			/* autoload libraries */
