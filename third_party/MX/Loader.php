@@ -416,7 +416,7 @@ class MX_Loader extends CI_Loader
 		foreach (array('helper', 'plugin', 'language') as $type) 
 		{
 			if (isset($autoload[$type]))
-		{
+			{
 				foreach ($autoload[$type] as $item) 
 				{
 					$this->$type($item);
@@ -432,7 +432,6 @@ class MX_Loader extends CI_Loader
 				/* autoload database */
 				if ( ! $db = CI::$APP->config->item('database')) 
 				{
-
 					$this->database();
 					$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
 				}
