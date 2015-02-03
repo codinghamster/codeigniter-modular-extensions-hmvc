@@ -47,7 +47,7 @@ class MX_Router extends CI_Router
 	public function _validate_request($segments)
 	{
 		$segments = parent::_validate_request($segments);
-
+			
 		if ( ! empty($segments) && empty($this->directory))
 		{
 			/* locate module controller */
@@ -56,8 +56,16 @@ class MX_Router extends CI_Router
 				return $located;
 			}
 
-			/* set the 404_override controller module path */
-			$this->_set_module_path($this->routes['404_override']);
+			if ( ! empty($this->directory))
+			{
+				parent::_set_default_controller();
+				return;
+			}
+			else
+			{
+				/* set the 404_override controller module path */
+				$this->_set_module_path($this->routes['404_override']);
+			}
 		}
 
 		return $segments;
@@ -159,19 +167,21 @@ class MX_Router extends CI_Router
 		if ( ! empty($_route))
 		{
 			// Are module/controller/method segments being specified?
-			$sgs = sscanf($_route, '%[^/]/%[^/]/%s', $module, $class, $method);
-		
+			$sgs = sscanf($_route, '%[^/]/%[^/]/%[^/]/%s', $module, $directory, $class, $method);
+			
 			// set the module/controller directory location if found
-			if ($this->locate(array($module, $class)))
-			{
+			if ($this->locate(array($module, $directory, $class)))
+			{ 
 				//reset to class/method
 				switch ($sgs)
 				{
 					case 1:	$_route = $module.'/index';
 						break;
-					case 2: $_route = $module.'/'.$class;
+					case 2: $_route = $module.'/'.$directory;
 						break;
-					case 3: $_route = $class.'/'.$method;
+					case 3: $_route = $directory.'/'.$class;
+						break;
+					case 4: $_route = $class.'/'.$method;
 						break;
 				}
 			}
