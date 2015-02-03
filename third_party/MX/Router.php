@@ -47,7 +47,7 @@ class MX_Router extends CI_Router
 	public function _validate_request($segments)
 	{
 		$segments = parent::_validate_request($segments);
-			
+		
 		if ( ! empty($segments) && empty($this->directory))
 		{
 			/* locate module controller */
@@ -61,13 +61,8 @@ class MX_Router extends CI_Router
 				parent::_set_default_controller();
 				return;
 			}
-			else
-			{
-				/* set the 404_override controller module path */
-				$this->_set_module_path($this->routes['404_override']);
-			}
 		}
-
+		
 		return $segments;
 	}
 
@@ -85,7 +80,6 @@ class MX_Router extends CI_Router
 	/** Locate the controller **/
 	public function locate($segments)
 	{
-		$sgs = 0;
 		$ext = $this->config->item('controller_suffix').EXT;
 
 		/* use module route if available */
@@ -103,7 +97,6 @@ class MX_Router extends CI_Router
 			/* module exists? */
 			if (is_dir($source = $location.$module.'/controllers/'))
 			{
-				$sgs = 1;
 				$this->module = $module;
 				$this->directory = $offset.$module.'/controllers/';
 
@@ -112,13 +105,12 @@ class MX_Router extends CI_Router
 				{
 					if(is_file($source.ucfirst($directory).$ext))
 					{
-						return array_slice($segments, $sgs);
+						return array_slice($segments, 1);
 					}
 
 					/* module sub-directory exists? */
 					if(is_dir($source.$directory.'/'))
 					{
-						$sgs = 2;
 						$source .= $directory.'/';
 						$this->directory .= $directory.'/';
 
@@ -126,7 +118,7 @@ class MX_Router extends CI_Router
 						if($controller && 
 							is_file($source.ucfirst($controller).$ext))
 						{
-							return array_slice($segments, $sgs);
+							return array_slice($segments, 2);
 						}
 					}
 				}
@@ -162,8 +154,6 @@ class MX_Router extends CI_Router
 				return array_slice($segments, 2);
 			}
 		}
-		
-		return array_slice($segments, $sgs);
 	}
 
 	/* set module path */
