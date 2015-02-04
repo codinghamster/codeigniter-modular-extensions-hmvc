@@ -184,7 +184,6 @@ class MX_Router extends CI_Router
 					return array_slice($segments, 2);
 				}
 			}
-			$this->located = -1;
 		}
 
 		/* application controller exists? */
