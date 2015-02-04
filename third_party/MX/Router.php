@@ -38,35 +38,59 @@ require dirname(__FILE__).'/Modules.php';
 class MX_Router extends CI_Router
 {
 	public $module;
+	private $located = 0;
 
 	public function fetch_module()
 	{
 		return $this->module;
 	}
 
-	public function _validate_request($segments)
+	public function _set_request($segments = array())
 	{
-		$segments = parent::_validate_request($segments);
-		
-		if ( ! empty($segments) && empty($this->directory))
+		if ($this->translate_uri_dashes === TRUE)
 		{
-			/* locate module controller */
-			if ($located = $this->locate($segments))
+			foreach(range(0, 2) as $v)
 			{
-				return $located;
-			}
-
-			if ( ! empty($this->directory))
-			{
-				parent::_set_default_controller();
-				return;
+				isset($segments[$v]) && $segments[$v] = str_replace('-', '_', $segments[$v]);
 			}
 		}
 		
-		return $segments;
+		$segments = $this->locate($segments);
+		
+		if($this->located == -1)
+		{
+			$this->_set_404override_controller();
+			return;
+		}
+
+		if(empty($segments))
+		{
+			$this->_set_default_controller();
+			return;
+		}
+		
+        $this->set_class($segments[0]);
+       
+        if (isset($segments[1]))
+        {
+        	$this->set_method($segments[1]);
+        }
+        else
+        {
+        	$segments[1] = 'index';
+        }
+       
+       array_unshift($segments, NULL);
+       unset($segments[0]);
+       $this->uri->rsegments = $segments;
+	}
+	
+	protected function _set_404override_controller()
+	{
+		$this->_set_module_path($this->routes['404_override']);
 	}
 
-	public function _set_default_controller()
+	protected function _set_default_controller()
 	{
 		if (empty($this->directory))
 		{
@@ -75,11 +99,17 @@ class MX_Router extends CI_Router
 		}
 
 		parent::_set_default_controller();
+		
+		if(empty($this->class))
+		{
+			$this->_set_404override_controller();
+		}
 	}
 
 	/** Locate the controller **/
 	public function locate($segments)
 	{
+		$this->located = 0;
 		$ext = $this->config->item('controller_suffix').EXT;
 
 		/* use module route if available */
@@ -115,10 +145,13 @@ class MX_Router extends CI_Router
 						$this->directory .= $directory.'/';
 
 						/* module sub-directory controller exists? */
-						if($controller && 
-							is_file($source.ucfirst($controller).$ext))
+						if($controller)
 						{
-							return array_slice($segments, 2);
+							if(is_file($source.ucfirst($controller).$ext))
+							{
+								return array_slice($segments, 2);
+							}
+							$this->located = -1;
 						}
 					}
 				}
@@ -130,13 +163,9 @@ class MX_Router extends CI_Router
 				}
 			}
 		}
-
-		/* application controller exists? */
-		if (is_file(APPPATH.'controllers/'.ucfirst($module).$ext))
-		{
-			return $segments;
-		}
-
+		
+		if( ! empty($this->directory)) return;
+		
 		/* application sub-directory controller exists? */
 		if($directory)
 		{
@@ -147,13 +176,30 @@ class MX_Router extends CI_Router
 			}
 
 			/* application sub-sub-directory controller exists? */
-			if($controller && 
-				is_file(APPPATH.'controllers/'.$module.'/'.$directory.'/'.ucfirst($controller).$ext))
-			{
-				$this->directory = $module.'/'.$directory.'/';
-				return array_slice($segments, 2);
+			if($controller)
+			{ 
+				if(is_file(APPPATH.'controllers/'.$module.'/'.$directory.'/'.ucfirst($controller).$ext))
+				{
+					$this->directory = $module.'/'.$directory.'/';
+					return array_slice($segments, 2);
+				}
 			}
+			$this->located = -1;
 		}
+
+		/* application controller exists? */
+		if (is_file(APPPATH.'controllers/'.ucfirst($module).$ext))
+		{
+			return $segments;
+		}
+		
+		/* application controllers sub-directory exists? */
+		if (is_dir(APPPATH.'controllers/'.$module.'/'))
+		{
+			$this->directory = $module.'/';
+			return array_slice($segments, 1);
+		}
+		$this->located = -1;
 	}
 
 	/* set module path */
@@ -161,7 +207,7 @@ class MX_Router extends CI_Router
 	{
 		if ( ! empty($_route))
 		{
-			// Are module/controller/method segments being specified?
+			// Are module/directory/controller/method segments being specified?
 			$sgs = sscanf($_route, '%[^/]/%[^/]/%[^/]/%s', $module, $directory, $class, $method);
 			
 			// set the module/controller directory location if found
