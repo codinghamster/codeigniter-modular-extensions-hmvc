@@ -45,7 +45,7 @@ class MX_Router extends CI_Router
 		return $this->module;
 	}
 
-	public function _set_request($segments = array())
+	protected function _set_request($segments = array())
 	{
 		if ($this->translate_uri_dashes === TRUE)
 		{
@@ -69,20 +69,20 @@ class MX_Router extends CI_Router
 			return;
 		}
 		
-        $this->set_class($segments[0]);
+		$this->set_class($segments[0]);
+		
+		if (isset($segments[1]))
+		{
+			$this->set_method($segments[1]);
+		}
+		else
+		{
+			$segments[1] = 'index';
+		}
        
-        if (isset($segments[1]))
-        {
-        	$this->set_method($segments[1]);
-        }
-        else
-        {
-        	$segments[1] = 'index';
-        }
-       
-       array_unshift($segments, NULL);
-       unset($segments[0]);
-       $this->uri->rsegments = $segments;
+		array_unshift($segments, NULL);
+		unset($segments[0]);
+		$this->uri->rsegments = $segments;
 	}
 	
 	protected function _set_404override_controller()
@@ -203,7 +203,7 @@ class MX_Router extends CI_Router
 	}
 
 	/* set module path */
-	public function _set_module_path(&$_route)
+	protected function _set_module_path(&$_route)
 	{
 		if ( ! empty($_route))
 		{
