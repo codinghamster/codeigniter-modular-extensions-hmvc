@@ -56,7 +56,7 @@ class MX_Router extends CI_Router
 		}
 		
 		$segments = $this->locate($segments);
-		
+
 		if($this->located == -1)
 		{
 			$this->_set_404override_controller();
@@ -141,7 +141,7 @@ class MX_Router extends CI_Router
 
 					/* module sub-directory exists? */
 					if(is_dir($source.$directory.'/'))
-					{
+					{	
 						$source .= $directory.'/';
 						$this->directory .= $directory.'/';
 
@@ -153,9 +153,10 @@ class MX_Router extends CI_Router
 								$this->located = 3;
 								return array_slice($segments, 2);
 							}
-							$this->located = -1;
+							else $this->located = -1;
 						}
 					}
+					else $this->located = -1;
 				}
 
 				/* module controller exists? */
@@ -166,7 +167,7 @@ class MX_Router extends CI_Router
 				}
 			}
 		}
-		
+
 		if( ! empty($this->directory)) return;
 		
 		/* application sub-directory controller exists? */
@@ -201,6 +202,7 @@ class MX_Router extends CI_Router
 			$this->directory = $module.'/';
 			return array_slice($segments, 1);
 		}
+		
 		$this->located = -1;
 	}
 
