@@ -135,6 +135,7 @@ class MX_Router extends CI_Router
 				{
 					if(is_file($source.ucfirst($directory).$ext))
 					{
+						$this->located = 2;
 						return array_slice($segments, 1);
 					}
 
@@ -149,6 +150,7 @@ class MX_Router extends CI_Router
 						{
 							if(is_file($source.ucfirst($controller).$ext))
 							{
+								$this->located = 3;
 								return array_slice($segments, 2);
 							}
 							$this->located = -1;
@@ -159,6 +161,7 @@ class MX_Router extends CI_Router
 				/* module controller exists? */
 				if(is_file($source.ucfirst($module).$ext))
 				{
+					$this->located = 1;
 					return $segments;
 				}
 			}
@@ -211,17 +214,17 @@ class MX_Router extends CI_Router
 			
 			// set the module/controller directory location if found
 			if ($this->locate(array($module, $directory, $class)))
-			{ 
+			{
 				//reset to class/method
 				switch ($sgs)
 				{
 					case 1:	$_route = $module.'/index';
 						break;
-					case 2: $_route = $module.'/'.$directory;
+					case 2: $_route = ($this->located < 2) ? $module.'/'.$directory : $directory.'/index';
 						break;
-					case 3: $_route = $directory.'/'.$class;
+					case 3: $_route = ($this->located == 2) ? $directory.'/'.$class : $class.'/index';
 						break;
-					case 4: $_route = $class.'/'.$method;
+					case 4: $_route = ($this->located == 3) ? $class.'/'.$method : $method.'/index';
 						break;
 				}
 			}
