@@ -193,7 +193,7 @@ class Modules
 			{			
 				$fullpath = $location.$module.'/'.$base.$subpath;
 				
-				if ($base == 'libraries/' && is_file($fullpath.ucfirst($file_ext))) 
+				if (($base == 'libraries/' OR $base == 'models/') && is_file($fullpath.ucfirst($file_ext))) 
 					return array($fullpath, ucfirst($file));
 					
 				if (is_file($fullpath.$file_ext)) return array($fullpath, $file);
