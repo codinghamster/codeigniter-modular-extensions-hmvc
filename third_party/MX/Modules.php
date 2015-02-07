@@ -116,10 +116,14 @@ class Modules
 		if (strstr($class, 'CI_') OR strstr($class, config_item('subclass_prefix'))) return;
 
 		/* autoload Modular Extensions MX core classes */
-		if (strstr($class, 'MX_') && is_file($location = dirname(__FILE__).'/'.substr($class, 3).EXT)) 
+		if (strstr($class, 'MX_')) 
 		{
-			include_once $location;
-			return;
+			if (is_file($location = dirname(__FILE__).'/'.substr($class, 3).EXT)) 
+			{
+				include_once $location;
+				return;
+			}
+			show_error('Failed to load MX core class: '.$class);
 		}
 		
 		/* autoload core classes */
