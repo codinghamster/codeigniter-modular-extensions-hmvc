@@ -187,7 +187,10 @@ class MX_Loader extends CI_Loader
 	/** Load an array of libraries **/
 	public function libraries($libraries)
 	{
-		foreach ($libraries as $_alias => $_library) is_int($_alias) ? $this->library($_library) : $this->library($_alias, null, $_library);
+		foreach ($libraries as $library => $alias) 
+		{
+			(is_int($library)) ? $this->library($alias) : $this->library($library, NULL, $alias);
+		}
 		return $this;
 	}
 
@@ -232,7 +235,10 @@ class MX_Loader extends CI_Loader
 	/** Load an array of models **/
 	public function models($models)
 	{
-		foreach ($models as $_alias => $_model) is_int($_alias) ? $this->model($_model) : $this->model($_alias, null, $_model);
+		foreach ($models as $model => $alias) 
+		{
+			(is_int($model)) ? $this->model($alias) : $this->model($model, $alias);
+		}
 		return $this;
 	}
 
@@ -436,9 +442,9 @@ class MX_Loader extends CI_Loader
 			}
 
 			/* autoload libraries */
-			foreach ($autoload['libraries'] as $library)
+			foreach ($autoload['libraries'] as $library => $alias)
 			{
-				$this->library($library);
+				(is_int($library)) ? $this->library($alias) : $this->library($library, NULL, $alias);
 			}
 		}
 
@@ -447,7 +453,7 @@ class MX_Loader extends CI_Loader
 		{
 			foreach ($autoload['model'] as $model => $alias)
 			{
-				(is_numeric($model)) ? $this->model($alias) : $this->model($model, $alias);
+				(is_int($model)) ? $this->model($alias) : $this->model($model, $alias);
 			}
 		}
 
