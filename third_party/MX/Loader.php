@@ -427,6 +427,15 @@ class MX_Loader extends CI_Loader
 				}
 			}
 		}
+		
+		// Autoload drivers
+		if (isset($autoload['drivers']))
+		{
+		    foreach ($autoload['drivers'] as $item => $alias)
+		    {
+		        (is_int($item)) ? $this->driver($alias) : $this->driver($item, $alias);
+		    }
+		}
 
 		/* autoload database & libraries */
 		if (isset($autoload['libraries']))
