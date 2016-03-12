@@ -191,7 +191,7 @@ A. (http://en.wikipedia.org/wiki/Module)
 
 Q. What is Modular HMVC, why should I use it?
 
-A. Modular HMVC = Multiple MVC triads
+A. Modular HMVC = Hierarchy of multiple MVC triads
 
 This is most useful when you need to load a view and its data within a view. Think about adding a shopping 
 cart to a page. The shopping cart needs its own controller which may call a model to get cart data. 
