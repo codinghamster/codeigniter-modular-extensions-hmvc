@@ -153,7 +153,7 @@ Parameters are optional, You may pass any number of parameters.
 1. Start with a clean CI install
 2. Set $config[‘base_url’] correctly for your installation
 3. Access the URL /index.php/welcome => shows Welcome to CodeIgniter
-4. Drop Modular Extensions third_party files into the CI 2.0  application/third_party directory
+4. Drop Modular Extensions third_party files into the application/third_party directory
 5. Drop Modular Extensions core files into application/core, the MY_Controller.php file is not required unless you wish to create your own controller extension
 6. Access the URL /index.php/welcome => shows Welcome to CodeIgniter
 7. Create module directory structure application/modules/welcome/controllers
@@ -191,7 +191,7 @@ A. (http://en.wikipedia.org/wiki/Module)
 
 Q. What is Modular HMVC, why should I use it?
 
-A. Modular HMVC = Multiple MVC triads
+A. Modular HMVC = Hierarchy of multiple MVC triads
 
 This is most useful when you need to load a view and its data within a view. Think about adding a shopping 
 cart to a page. The shopping cart needs its own controller which may call a model to get cart data. 
