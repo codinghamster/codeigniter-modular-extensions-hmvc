@@ -1,5 +1,5 @@
 {
-    "name": "codinghamster/codeigniter-hmvc",
+    "name": "codinghamster/codeigniter-modular-extensions-hmvc",
     "description": "CodeIgniter framework modular extension - HMVC",
     "type": "library",
     "require": {},
