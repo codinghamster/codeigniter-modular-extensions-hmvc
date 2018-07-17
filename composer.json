@@ -2,6 +2,7 @@
     "name": "codinghamster/codeigniter-modular-extensions-hmvc",
     "description": "CodeIgniter framework modular extension - HMVC",
     "type": "library",
+    "license": "MIT",
     "require": {},
     "autoload": {
         "classmap": [
